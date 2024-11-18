@@ -83,7 +83,7 @@ class AuthRepository @Inject constructor(
             if (success) {
                 emit(Resource.Success(true))
             } else {
-                emit(Resource.Error("Problema al iniciar sesión con Google"))
+                emit(Resource.Error("Error al iniciar sesión con Google"))
             }
         } catch (e: Exception) {
             e.printStackTrace()
