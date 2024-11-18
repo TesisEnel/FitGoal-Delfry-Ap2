@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1019711990584",
+    "project_id": "fitgoal-12fdb",
+    "storage_bucket": "fitgoal-12fdb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019711990584:android:08e982630169f18fdf6fcd",
+        "android_client_info": {
+          "package_name": "edu.ucne.fitgoal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019711990584-87a572ke6ntg72h0op7id9gp1pl0n43m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAhNbdDUlF9fdRanedLzISq-OaUZXhX_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019711990584-469ecki4uqspvdor692ei1nen7e18st1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
