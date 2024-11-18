@@ -25,4 +25,6 @@ object AppModule {
 
     @Provides
     fun provideFitGoalDao(fitGoalDb: FitGoalDb) = fitGoalDb.fitGoalDao()
+    @Provides
+    fun provideUsuarioDao(fitGoalDb: FitGoalDb) = fitGoalDb.usuarioDao()
 }
