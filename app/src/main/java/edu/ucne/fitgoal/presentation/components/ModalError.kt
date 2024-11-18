@@ -29,7 +29,7 @@ import edu.ucne.fitgoal.R
 import edu.ucne.fitgoal.ui.theme.RojoClaro
 
 @Composable
-fun ModalError(error: String, onclick:() -> Unit){
+fun ModalError(error: String, onclick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -47,13 +47,15 @@ fun ModalError(error: String, onclick:() -> Unit){
                 )
         ) {
             Column(
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.modalerror),
                     contentDescription = "Error",
                     modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
                         .size(120.dp)
                 )
 
@@ -61,8 +63,7 @@ fun ModalError(error: String, onclick:() -> Unit){
                     text = "¡ERROR!",
                     style = MaterialTheme.typography.titleLarge,
                     color = Color.Red,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    fontWeight = FontWeight.Bold
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -72,7 +73,7 @@ fun ModalError(error: String, onclick:() -> Unit){
                     style = MaterialTheme.typography.bodyLarge,
                     color = Color.Black,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
             Box(
@@ -80,7 +81,10 @@ fun ModalError(error: String, onclick:() -> Unit){
             ) {
                 FloatingActionButton(
                     onClick = { onclick() },
-                    modifier = Modifier.padding(10.dp).align(Alignment.TopEnd).size(40.dp),
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .align(Alignment.TopEnd)
+                        .size(40.dp),
                     containerColor = RojoClaro
                 ) {
                     Icon(
