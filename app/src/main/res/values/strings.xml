@@ -4,4 +4,5 @@
     <string name="drawer_planificador">Planificador</string>
     <string name="drawer_reloj">Reloj</string>
     <string name="drawer_calculadora">Calculadora</string>
+    <string name="drawer_home">Home</string>
 </resources>
