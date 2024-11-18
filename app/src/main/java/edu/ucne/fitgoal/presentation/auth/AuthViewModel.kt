@@ -1,7 +1,6 @@
 package edu.ucne.fitgoal.presentation.auth
 
 import android.content.Context
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.fitgoal.data.remote.Resource
-import edu.ucne.fitgoal.data.remote.dto.UsuarioDto
 import edu.ucne.fitgoal.data.repository.AuthRepository
 import edu.ucne.fitgoal.presentation.navigation.Screen
 import kotlinx.coroutines.delay
