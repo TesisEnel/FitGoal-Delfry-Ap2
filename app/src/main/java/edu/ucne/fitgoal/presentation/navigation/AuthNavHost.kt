@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.ucne.fitgoal.presentation.auth.AuthViewModel
 import edu.ucne.fitgoal.presentation.auth.LoginScreen
-import edu.ucne.fitgoal.presentation.auth.OlvidarContraseñaScreen
+import edu.ucne.fitgoal.presentation.auth.ResetPassWordScreen
 import edu.ucne.fitgoal.presentation.auth.RegistrarseScreen
 import edu.ucne.fitgoal.presentation.auth.VerifyEmailScreen
 
@@ -71,7 +71,7 @@ fun AuthNavHost(
         }
 
         composable<Screen.OlvidarContrasenaScreen>{
-            OlvidarContraseñaScreen(
+            ResetPassWordScreen(
                 goLogin = {
                     navHostController.navigate(Screen.LoginScreen)
                 }
