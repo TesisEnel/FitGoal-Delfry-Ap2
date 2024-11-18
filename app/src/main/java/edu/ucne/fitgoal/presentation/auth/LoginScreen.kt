@@ -176,7 +176,7 @@ fun LoginScreen(
                             enabled = !uiState.isLoading
                         ) {
                             Text(
-                                text = "INICIA SESIÓN",
+                                text = "INICIAR SESIÓN",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
