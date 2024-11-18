@@ -34,6 +34,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import edu.ucne.fitgoal.R
 import edu.ucne.fitgoal.presentation.components.BackGroundImage
+import edu.ucne.fitgoal.presentation.components.LoadingIndicator
+import edu.ucne.fitgoal.presentation.components.ModalError
 import edu.ucne.fitgoal.presentation.components.PassWordTextField
 import edu.ucne.fitgoal.presentation.components.TextFielComponent
 import edu.ucne.fitgoal.ui.theme.DarkGreen
@@ -175,6 +177,15 @@ fun RegistrarseScreen(
                     }
                 }
             }
+        }
+        if (uiState.isLoading) {
+            LoadingIndicator()
+        }
+        if(uiState.isModalErrorVisible){
+            ModalError(
+                error = uiState.error,
+                onclick = {onEvent(AuthEvent.CloseErrorModal)}
+            )
         }
     }
 }

@@ -39,6 +39,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import edu.ucne.fitgoal.R
 import edu.ucne.fitgoal.presentation.components.BackGroundImage
+import edu.ucne.fitgoal.presentation.components.ModalError
 import edu.ucne.fitgoal.ui.theme.DarkGreen
 import edu.ucne.fitgoal.ui.theme.ExDarkGreen
 import edu.ucne.fitgoal.ui.theme.LightBlue
@@ -164,5 +165,11 @@ fun VerifyEmailScreen(
                 modifier = Modifier.padding(top = 3.dp)
             )
         }
+    }
+    if(uiState.isModalErrorVisible){
+        ModalError(
+            error = uiState.error,
+            onclick = {onEvent(AuthEvent.CloseErrorModal)}
+        )
     }
 }
