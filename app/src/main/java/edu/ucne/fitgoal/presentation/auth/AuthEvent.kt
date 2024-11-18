@@ -18,4 +18,5 @@ sealed interface AuthEvent {
     data object IsEmailVerified : AuthEvent
     data object StartEmailVerification : AuthEvent
     data object ChangePasswordVisibility : AuthEvent
+    data object CloseErrorModal : AuthEvent
 }

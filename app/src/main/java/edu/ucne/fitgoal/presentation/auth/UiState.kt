@@ -21,7 +21,8 @@ data class UiState(
     val isAuthorized: Boolean = false,
     var isEmailVerified: Boolean = false,
     val isButtonEnabled: Boolean = true,
-    val tiempo: Int = 0
+    val tiempo: Int = 0,
+    val isModalErrorVisible: Boolean = false,
 )
 
 fun UiState.toDto() = UsuarioDto(

@@ -50,7 +50,13 @@ class AuthViewModel @Inject constructor(
             AuthEvent.StartEmailVerification -> startEmailVerification()
             AuthEvent.StartDestination -> startDestination()
             AuthEvent.ChangePasswordVisibility -> changePasswordVisibility()
+            AuthEvent.CloseErrorModal -> closeErrorModal()
         }
+    }
+
+    private fun closeErrorModal() {
+        _uiState.value = _uiState.value.copy(isModalErrorVisible = false)
+        _uiState.value = _uiState.value.copy(error = "")
     }
 
     fun startDestination(): Screen {
@@ -78,7 +84,8 @@ class AuthViewModel @Inject constructor(
                     is Resource.Error -> {
                         _uiState.value = _uiState.value.copy(
                             error = resource.message ?: "",
-                            isLoading = false
+                            isLoading = false,
+                            isModalErrorVisible = true
                         )
                     }
 
@@ -106,7 +113,8 @@ class AuthViewModel @Inject constructor(
                 is Resource.Error -> {
                     _uiState.value = _uiState.value.copy(
                         error = resource.message ?: "",
-                        isLoading = false
+                        isLoading = false,
+                        isModalErrorVisible = true
                     )
                 }
 
@@ -147,7 +155,8 @@ class AuthViewModel @Inject constructor(
                 is Resource.Error -> {
                     _uiState.value = _uiState.value.copy(
                         error = resource.message ?: "",
-                        isLoading = false
+                        isLoading = false,
+                        isModalErrorVisible = true
                     )
                 }
 
@@ -190,7 +199,8 @@ class AuthViewModel @Inject constructor(
                         is Resource.Error -> {
                             _uiState.value = _uiState.value.copy(
                                 error = resource.message ?: "",
-                                isLoading = false
+                                isLoading = false,
+                                isModalErrorVisible = true
                             )
                         }
 
@@ -229,7 +239,8 @@ class AuthViewModel @Inject constructor(
                         is Resource.Error -> {
                             _uiState.value = _uiState.value.copy(
                                 error = resource.message ?: "",
-                                isLoading = false
+                                isLoading = false,
+                                isModalErrorVisible = true
                             )
                         }
 
