@@ -13,4 +13,6 @@ class RemoteDataSource @Inject constructor(
     suspend fun postUsuario(usuarioDto: UsuarioDto) = fitGoalApi.postUsuario(usuarioDto)
     suspend fun putUsuario(id: String, usuarioDto: UsuarioDto) = fitGoalApi.putUsuario(id, usuarioDto)
     suspend fun getUsuario(id: String) = fitGoalApi.getUsuario(id)
+
+    suspend fun getEjercicios() = fitGoalApi.getEjercicios()
 }
