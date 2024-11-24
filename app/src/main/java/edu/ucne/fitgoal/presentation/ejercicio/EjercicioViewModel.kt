@@ -1,9 +1,9 @@
 package edu.ucne.fitgoal.presentation.ejercicio
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
 import edu.ucne.fitgoal.data.remote.Resource
 import edu.ucne.fitgoal.data.repository.EjercicioRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,25 +22,32 @@ class EjercicioViewModel @Inject constructor(
 
     init {
         getEjercicios()
+        _uiState.value = _uiState.value.copy(
+            selectedEjercicio = _uiState.value.ejercicios.find { it.ejercicioId == 1 }
+        )
     }
 
-    fun onEvent(event: EjercicioEvent){
-        when(event){
-            is EjercicioEvent.GetEjercicios -> TODO()
+    fun onEvent(event: EjercicioEvent) {
+        when (event) {
+            is EjercicioEvent.GetEjercicios -> getEjercicios()
             is EjercicioEvent.CloseErrorModal -> closeErrorModal()
+            is EjercicioEvent.CloseDetailModal -> closeDetailModal()
+            is EjercicioEvent.FilterEjercicios -> filterEjercicios(event.filtro)
+            is EjercicioEvent.SelectEjercicio -> selectEjercicio(event.ejercicioId)
         }
     }
 
     private fun getEjercicios() {
         viewModelScope.launch {
-            ejercicioRepository.getEjercicios().collectLatest{ result ->
-                when(result){
+            ejercicioRepository.getEjercicios().collectLatest { result ->
+                when (result) {
                     is Resource.Loading -> {
                         _uiState.value = _uiState.value.copy(
                             error = "",
                             isLoading = true
                         )
                     }
+
                     is Resource.Success -> {
                         _uiState.value = _uiState.value.copy(
                             error = "",
@@ -48,6 +55,7 @@ class EjercicioViewModel @Inject constructor(
                             ejercicios = result.data ?: emptyList()
                         )
                     }
+
                     is Resource.Error -> {
                         _uiState.value = _uiState.value.copy(
                             error = result.message ?: "Error",
@@ -60,9 +68,36 @@ class EjercicioViewModel @Inject constructor(
         }
     }
 
+    private fun filterEjercicios(filtro: String) {
+        _uiState.value = _uiState.value.copy(filtro = filtro)
+        viewModelScope.launch {
+            val ejercicios = ejercicioRepository.getEjerciciosLocales()
+            ejercicios.collect {
+                _uiState.value = _uiState.value.copy(
+                    ejercicios = if (filtro.isEmpty()) it else it.filter { ejercicio ->
+                        ejercicio.nombreEjercicio?.lowercase()
+                            ?.contains(filtro, ignoreCase = true) ?: false
+                    }
+                )
+            }
+        }
+    }
+
     private fun closeErrorModal() {
         _uiState.value = _uiState.value.copy(isModalErrorVisible = false)
         _uiState.value = _uiState.value.copy(error = "")
+    }
+
+    private fun closeDetailModal() {
+        _uiState.value = _uiState.value.copy(isModalDetailVisible = false)
+    }
+
+    private fun selectEjercicio(ejercicioId: Int) {
+       Log.d("EjercicioViewModel", "Ejercicio seleccionado: $ejercicioId")
+        _uiState.value = _uiState.value.copy(
+            isModalDetailVisible = true,
+            selectedEjercicio = _uiState.value.ejercicios.find { it.ejercicioId == ejercicioId }
+        )
     }
 }
 
