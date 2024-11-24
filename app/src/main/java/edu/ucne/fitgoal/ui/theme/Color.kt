@@ -21,3 +21,4 @@ val RojoClaro = Color(0xFFE24A4A)
 
 val VerdeClaro = Color(0xFF96E6A1)
 val AmarilloVerde = Color(0xFFD4FC79)
+val Hueso = Color(0xFFF7F7F7)
