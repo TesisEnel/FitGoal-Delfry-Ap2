@@ -35,4 +35,6 @@ class EjercicioRepository @Inject constructor(
             }
         }
     }
+
+    fun getEjerciciosLocales() = ejercicioDao.getAll()
 }
