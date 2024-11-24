@@ -6,5 +6,8 @@ data class UiState(
     val isLoading: Boolean = false,
     val error: String = "",
     val ejercicios: List<EjercicioEntity> = emptyList(),
-    val isModalErrorVisible: Boolean = false
+    val selectedEjercicio: EjercicioEntity? = null,
+    val isModalErrorVisible: Boolean = false,
+    val isModalDetailVisible: Boolean = false,
+    val filtro: String = ""
 )
