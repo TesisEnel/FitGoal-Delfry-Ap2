@@ -1,5 +1,6 @@
 package edu.ucne.fitgoal.presentation.navigation
 
+import android.app.Activity
 import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -79,12 +80,20 @@ fun MainNavHost(
                 )
             }
             composable<Screen.HomeScreen> {
-                HomeScreen()
+                HomeScreen(
+                    goLogin = {
+                        navHostController.navigate(Screen.AuthNavHostScreen){
+                            popUpTo(0) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+                )
             }
 
             composable<Screen.AuthNavHostScreen> {
                 val context = LocalContext.current
                 LaunchedEffect(Unit) {
+                    (context as? Activity)?.finish()
                     context.startActivity(
                         Intent(context, MainActivity::class.java)
                     )
