@@ -1,18 +1,21 @@
 package edu.ucne.fitgoal.presentation.navigation
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import edu.ucne.fitgoal.MainActivity
 import edu.ucne.fitgoal.presentation.calculadora.CalculadoraScreen
 import edu.ucne.fitgoal.presentation.ejercicio.EjercicioScreen
 import edu.ucne.fitgoal.presentation.home.HomeScreen
 import edu.ucne.fitgoal.presentation.perfil.PerfilScreen
 import edu.ucne.fitgoal.presentation.planificador.PlanificadorScreen
-import edu.ucne.fitgoal.presentation.reloj.RelojScreen
 
 @Composable
 fun MainNavHost(
@@ -80,7 +83,12 @@ fun MainNavHost(
             }
 
             composable<Screen.AuthNavHostScreen> {
-                AuthNavHost()
+                val context = LocalContext.current
+                LaunchedEffect(Unit) {
+                    context.startActivity(
+                        Intent(context, MainActivity::class.java)
+                    )
+                }
             }
         }
     }
