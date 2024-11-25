@@ -18,3 +18,7 @@ val LightGreen = Color(0xFF85C485)
 val ExDarkGreen = Color(0xFF002B1A)
 val Error = Color(0xFFD32F2F)
 val RojoClaro = Color(0xFFE24A4A)
+
+val VerdeClaro = Color(0xFF96E6A1)
+val AmarilloVerde = Color(0xFFD4FC79)
+val Hueso = Color(0xFFF7F7F7)

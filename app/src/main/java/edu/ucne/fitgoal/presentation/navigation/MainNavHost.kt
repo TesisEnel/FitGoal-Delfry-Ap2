@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.ucne.fitgoal.presentation.calculadora.CalculadoraScreen
+import edu.ucne.fitgoal.presentation.ejercicio.EjercicioScreen
 import edu.ucne.fitgoal.presentation.home.HomeScreen
 import edu.ucne.fitgoal.presentation.perfil.PerfilScreen
 import edu.ucne.fitgoal.presentation.planificador.PlanificadorScreen
@@ -55,17 +56,7 @@ fun MainNavHost(
                 )
             }
             composable<Screen.RelojScreen> {
-                RelojScreen(
-                    goToPlanificador = {
-                        navHostController.navigate(Screen.PlanificadorScreen)
-                    },
-                    goToPerfil = {
-                        navHostController.navigate(Screen.PerfilScreen)
-                    },
-                    onDrawer = {
-
-                    }
-                )
+                EjercicioScreen()
             }
             composable<Screen.CalculadoraScreen> {
 
