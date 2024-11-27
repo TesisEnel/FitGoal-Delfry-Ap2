@@ -99,6 +99,4 @@ class HoraioBebidaRepository @Inject constructor(
             emit(Resource.Error("Error ${e.message}"))
         }
     }
-
-    fun getHorarioBebidasLocal(id: String) = horarioBebidaDao.getAll(id)
 }

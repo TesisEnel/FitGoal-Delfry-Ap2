@@ -1,6 +1,10 @@
 package edu.ucne.fitgoal.presentation.aguadiaria
 
-import android.app.Activity
+import android.content.Context
+import android.os.Build
+import android.text.format.DateFormat
+import androidx.annotation.RequiresApi
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,6 +28,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -33,16 +38,22 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -56,9 +67,9 @@ import com.vanpra.composematerialdialogs.datetime.time.TimePickerDefaults
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import edu.ucne.fitgoal.R
-import edu.ucne.fitgoal.data.local.entities.HorarioBebidaEntity
 import edu.ucne.fitgoal.presentation.components.LoadingIndicator
 import edu.ucne.fitgoal.presentation.components.ModalError
+import edu.ucne.fitgoal.presentation.permission.PermissionScreen
 import edu.ucne.fitgoal.ui.theme.AmarilloVerde
 import edu.ucne.fitgoal.ui.theme.DarkGreen
 import edu.ucne.fitgoal.ui.theme.Error
@@ -67,25 +78,16 @@ import edu.ucne.fitgoal.ui.theme.LightBlue
 import edu.ucne.fitgoal.ui.theme.LightGreen
 import edu.ucne.fitgoal.ui.theme.RojoClaro
 import edu.ucne.fitgoal.ui.theme.VerdeClaro
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import kotlin.reflect.KFunction1
-import android.content.Context
-import android.text.format.DateFormat
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.SwipeToDismissBoxValue
-import androidx.compose.material3.rememberSwipeToDismissBoxState
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
+import kotlin.reflect.KFunction1
 import kotlin.time.Duration.Companion.seconds
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun HorarioScreen(
     horarioViewModel: HorarioBebidaViewModel = hiltViewModel()
@@ -237,7 +239,7 @@ fun HorarioScreen(
                                         )
                                         Spacer(modifier = Modifier.height(8.dp))
                                         Text(
-                                            text = "Hora: ${parsearHora(horario.hora!!, LocalContext.current)}",
+                                            text = "Hora: ${parsearHora(horario.hora, LocalContext.current)}",
                                             style = MaterialTheme.typography.bodySmall
                                         )
                                     }
@@ -274,6 +276,7 @@ fun HorarioScreen(
         if(uiState.isModalVisible && !uiState.isLoading){
             ModalAgregar(uiState, onEvent)
         }
+        PermissionScreen()
     }
 }
 
