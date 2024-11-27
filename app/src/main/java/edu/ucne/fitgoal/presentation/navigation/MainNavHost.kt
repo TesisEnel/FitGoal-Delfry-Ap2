@@ -48,20 +48,14 @@ fun MainNavHost(
 
             composable<Screen.PerfilScreen> {
                 PerfilScreen(
-                    goToPlanificador = {
-                        navHostController.navigate(Screen.PlanificadorScreen)
-                    },
-                    goToReloj = {
-                        navHostController.navigate(Screen.RelojScreen)
-                    },
-                    onDrawer = {
-
-                    }
+                    navController = navHostController
                 )
             }
+
             composable<Screen.RelojScreen> {
                 EjercicioScreen()
             }
+
             composable<Screen.CalculadoraScreen> {
 
                 CalculadoraScreen(
