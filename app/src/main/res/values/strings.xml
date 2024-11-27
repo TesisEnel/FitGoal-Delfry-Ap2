@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">FitGoal</string>
-    <string name="drawer_perfil">Perfil</string>
+    <string name="drawer_aguadiaria">AguaDiaria</string>
     <string name="drawer_planificador">Planificador</string>
-    <string name="drawer_reloj">Reloj</string>
+    <string name="drawer_ejercicios">Ejercicios</string>
     <string name="drawer_calculadora">Calculadora</string>
     <string name="drawer_home">Home</string>
 </resources>

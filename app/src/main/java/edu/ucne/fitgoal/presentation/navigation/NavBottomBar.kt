@@ -42,11 +42,11 @@ fun NavBottomBar(
             handleItemClick(Screen.PlanificadorScreen, it)
         }
         BottomNavItem(
-            title = stringResource(R.string.drawer_perfil),
-            isSelected = selectedItem.value == stringResource(R.string.drawer_perfil),
+            title = stringResource(R.string.drawer_aguadiaria),
+            isSelected = selectedItem.value == stringResource(R.string.drawer_aguadiaria),
             id = R.drawable.water
         ) {
-            handleItemClick(Screen.PerfilScreen, it)
+            handleItemClick(Screen.AguaDiariaScreen, it)
         }
         BottomNavItem(
             title = stringResource(R.string.drawer_home),
@@ -56,11 +56,11 @@ fun NavBottomBar(
             handleItemClick(Screen.HomeScreen, it)
         }
         BottomNavItem(
-            title = stringResource(R.string.drawer_reloj),
-            isSelected = selectedItem.value == stringResource(R.string.drawer_reloj),
+            title = stringResource(R.string.drawer_ejercicios),
+            isSelected = selectedItem.value == stringResource(R.string.drawer_ejercicios),
             id = R.drawable.pull_up
         ) {
-            handleItemClick(Screen.RelojScreen, it)
+            handleItemClick(Screen.EjerciciosScreen, it)
         }
         BottomNavItem(
             title = stringResource(R.string.drawer_calculadora),
