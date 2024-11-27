@@ -56,6 +56,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.9"
@@ -137,4 +138,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.coil.gif)
+
+    implementation (libs.datetime)
+    coreLibraryDesugaring (libs.desugar.jdk.libs)
 }
