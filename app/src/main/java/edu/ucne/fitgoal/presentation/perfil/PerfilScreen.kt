@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.Calculate
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -149,6 +150,14 @@ fun PerfilScreen(
                 }
 
                 Spacer(modifier = Modifier.height(30.dp))
+
+                ProfileButton(
+                    text = "Editar Perfil",
+                    icon = Icons.Default.Edit,
+                    onClick = { perfilViewModel.onEvent(PerfilEvent.NavigateToEditarPerfil) }
+                )
+
+                Spacer(modifier = Modifier.height(14.dp))
 
                 ProfileButton(
                     text = "Calculadora",

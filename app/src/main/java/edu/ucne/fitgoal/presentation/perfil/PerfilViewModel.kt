@@ -58,6 +58,7 @@ class PerfilViewModel @Inject constructor(
                     is Resource.Loading -> {
                         _uiState.update { it.copy(isLoading = true) }
                     }
+
                     is Resource.Success -> {
                         val usuario = resource.data
                         if (usuario != null) {
@@ -76,6 +77,7 @@ class PerfilViewModel @Inject constructor(
                             }
                         }
                     }
+
                     is Resource.Error -> {
                         _uiState.update {
                             it.copy(
@@ -92,6 +94,7 @@ class PerfilViewModel @Inject constructor(
     fun onEvent(event: PerfilEvent) {
         when (event) {
             is PerfilEvent.GetPerfil -> fetchUserData()
+            is PerfilEvent.NavigateToEditarPerfil -> {}
             is PerfilEvent.NavigateToCalculadora -> {}
             is PerfilEvent.NavigateToTips -> {}
             is PerfilEvent.NavigateToAyuda -> {}
