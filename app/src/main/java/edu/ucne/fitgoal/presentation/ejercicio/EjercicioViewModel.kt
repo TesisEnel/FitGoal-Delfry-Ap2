@@ -22,9 +22,6 @@ class EjercicioViewModel @Inject constructor(
 
     init {
         getEjercicios()
-        _uiState.value = _uiState.value.copy(
-            selectedEjercicio = _uiState.value.ejercicios.find { it.ejercicioId == 1 }
-        )
     }
 
     fun onEvent(event: EjercicioEvent) {

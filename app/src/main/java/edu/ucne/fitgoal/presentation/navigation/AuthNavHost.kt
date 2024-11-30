@@ -17,7 +17,6 @@ fun AuthNavHost(
     navHostController: NavHostController = rememberNavController(),
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
-
     NavHost(
         navController = navHostController,
         startDestination = authViewModel.startDestination()
