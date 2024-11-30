@@ -30,14 +30,20 @@ class PerfilViewModel @Inject constructor(
         val currentUser: FirebaseUser? = firebaseAuth.currentUser
         if (currentUser != null) {
             val userId = currentUser.uid
-            val photoUrl = currentUser.photoUrl?.toString()
+            val email = currentUser.email ?: ""
+            val displayName = currentUser.displayName ?: ""
+            val photoUrl = currentUser.photoUrl
+
             _uiState.update { state ->
                 state.copy(
                     uid = userId,
-                    photoUrl = photoUrl
+                    nombre = displayName,
+                    correo = email,
+                    photoUrl = photoUrl.toString()
                 )
             }
-            getUsuarioFromApi(userId)
+
+            getUsuario(userId)
         } else {
             _uiState.update { state ->
                 state.copy(error = "Usuario no autenticado")
@@ -45,7 +51,8 @@ class PerfilViewModel @Inject constructor(
         }
     }
 
-    private fun getUsuarioFromApi(userId: String) {
+
+    private fun getUsuario(userId: String) {
         viewModelScope.launch {
             perfilRepository.getUsuario(userId).collect { resource ->
                 when (resource) {
@@ -53,19 +60,22 @@ class PerfilViewModel @Inject constructor(
                         _uiState.update { it.copy(isLoading = true) }
                     }
                     is Resource.Success -> {
-                        val usuario = resource.data!!
-                        _uiState.update {
-                            it.copy(
-                                nombre = usuario.nombre,
-                                correo = usuario.correo,
-                                edad = usuario.edad,
-                                altura = usuario.altura,
-                                pesoActual = usuario.pesoActual,
-                                pesoIdeal = usuario.pesoIdeal,
-                                aguaDiaria = usuario.aguaDiaria,
-                                uid = usuario.usuarioId!!,
-                                isLoading = false
-                            )
+                        val usuario = resource.data
+                        if (usuario != null) {
+                            _uiState.update {
+                                it.copy(
+                                    nombre = usuario.nombre,
+                                    correo = usuario.correo,
+                                    edad = usuario.edad,
+                                    altura = usuario.altura,
+                                    pesoActual = usuario.pesoActual,
+                                    pesoIdeal = usuario.pesoIdeal,
+                                    aguaDiaria = usuario.aguaDiaria,
+                                    uid = usuario.usuarioId,
+                                    isLoading = false,
+                                    error = ""
+                                )
+                            }
                         }
                     }
                     is Resource.Error -> {

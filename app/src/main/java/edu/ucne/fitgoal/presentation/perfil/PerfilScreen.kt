@@ -65,159 +65,151 @@ fun PerfilScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (uiState.value.error.isNotEmpty()) {
-                    Text(
-                        text = "Error: ${uiState.value.error}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = Color.Red
-                    )
-                } else {
-                    Box(
-                        modifier = Modifier
-                            .size(100.dp)
-                            .background(Color.Gray, CircleShape),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        if (uiState.value.photoUrl != null) {
-                            AsyncImage(
-                                model = uiState.value.photoUrl,
-                                contentDescription = "Foto de perfil",
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .clip(CircleShape)
-                                    .background(Color.Gray, CircleShape)
-                            )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Default.Person,
-                                contentDescription = "Foto de perfil",
-                                tint = Color.White,
-                                modifier = Modifier.size(50.dp)
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Text(
-                        text = uiState.value.nombre,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.Black
-                    )
-
-                    Text(
-                        text = uiState.value.correo,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = Color.Gray
-                    )
-
-                    Text(
-                        text = "UID: ${uiState.value.uid}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Gray
-                    )
-
-                    Spacer(modifier = Modifier.height(30.dp))
-
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(180.dp)
-                            .padding(horizontal = 16.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        elevation = CardDefaults.elevatedCardElevation()
-                    ) {
-                        Column(
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Gray, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (uiState.value.photoUrl != null) {
+                        AsyncImage(
+                            model = uiState.value.photoUrl,
+                            contentDescription = "Foto de perfil",
                             modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxSize(),
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                "Edad: ${uiState.value.edad} años",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 20.sp
-                            )
-                            Text(
-                                "Altura: ${uiState.value.altura} m",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 20.sp
-                            )
-                            Text(
-                                "Peso Actual: ${uiState.value.pesoActual} lb",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 20.sp
-                            )
-                            Text(
-                                "Peso Ideal: ${uiState.value.pesoIdeal} lb",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 20.sp
-                            )
-                            Text(
-                                "Agua Diaria: ${uiState.value.aguaDiaria} L",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 20.sp
-                            )
-                        }
+                                .size(100.dp)
+                                .clip(CircleShape)
+                                .background(Color.Gray, CircleShape)
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Foto de perfil",
+                            tint = Color.White,
+                            modifier = Modifier.size(50.dp)
+                        )
                     }
+                }
 
-                    Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
-                    ProfileButton(
-                        text = "Calculadora",
-                        icon = Icons.Default.Calculate,
-                        onClick = { perfilViewModel.onEvent(PerfilEvent.NavigateToCalculadora) }
-                    )
+                Text(
+                    text = uiState.value.nombre.ifEmpty { "Nombre no disponible" },
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.Black
+                )
 
-                    Spacer(modifier = Modifier.height(14.dp))
+                Text(
+                    text = uiState.value.correo.ifEmpty { "Correo no disponible" },
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Gray
+                )
 
-                    ProfileButton(
-                        text = "Tips",
-                        icon = Icons.Default.Lightbulb,
-                        onClick = { perfilViewModel.onEvent(PerfilEvent.NavigateToTips) }
-                    )
+                Text(
+                    text = "UID: ${uiState.value.uid}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray
+                )
 
-                    Spacer(modifier = Modifier.height(14.dp))
+                Spacer(modifier = Modifier.height(30.dp))
 
-                    ProfileButton(
-                        text = "Ayuda",
-                        icon = Icons.AutoMirrored.Filled.Help,
-                        onClick = { perfilViewModel.onEvent(PerfilEvent.NavigateToAyuda) }
-                    )
-
-                    Spacer(modifier = Modifier.height(14.dp))
-
-                    OutlinedButton(
-                        onClick = {
-                            perfilViewModel.onEvent(PerfilEvent.Logout)
-                            navController.navigate(Screen.AuthNavHostScreen)
-                        },
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .padding(horizontal = 16.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.elevatedCardElevation()
+                ) {
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(60.dp)
-                            .padding(horizontal = 16.dp),
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = Color.Red
-                        ),
-                        border = BorderStroke(1.dp, Color.Red)
+                            .padding(16.dp)
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ExitToApp,
-                                contentDescription = "Cerrar sesión",
-                                tint = Color.Red
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = "Cerrar sesión",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Red
-                            )
-                        }
+                        Text(
+                            "Edad: ${uiState.value.edad} años",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontSize = 20.sp
+                        )
+                        Text(
+                            "Altura: ${uiState.value.altura} m",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontSize = 20.sp
+                        )
+                        Text(
+                            "Peso Actual: ${uiState.value.pesoActual} lb",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontSize = 20.sp
+                        )
+                        Text(
+                            "Peso Ideal: ${uiState.value.pesoIdeal} lb",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontSize = 20.sp
+                        )
+                        Text(
+                            "Agua Diaria: ${uiState.value.aguaDiaria} L",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontSize = 20.sp
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
+
+                ProfileButton(
+                    text = "Calculadora",
+                    icon = Icons.Default.Calculate,
+                    onClick = { perfilViewModel.onEvent(PerfilEvent.NavigateToCalculadora) }
+                )
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                ProfileButton(
+                    text = "Tips",
+                    icon = Icons.Default.Lightbulb,
+                    onClick = { perfilViewModel.onEvent(PerfilEvent.NavigateToTips) }
+                )
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                ProfileButton(
+                    text = "Ayuda",
+                    icon = Icons.AutoMirrored.Filled.Help,
+                    onClick = { perfilViewModel.onEvent(PerfilEvent.NavigateToAyuda) }
+                )
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                OutlinedButton(
+                    onClick = {
+                        perfilViewModel.onEvent(PerfilEvent.Logout)
+                        navController.navigate(Screen.AuthNavHostScreen)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .padding(horizontal = 16.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Color.Red
+                    ),
+                    border = BorderStroke(1.dp, Color.Red)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                            contentDescription = "Cerrar sesión",
+                            tint = Color.Red
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Cerrar sesión",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Red
+                        )
                     }
                 }
             }
