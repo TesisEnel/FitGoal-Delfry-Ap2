@@ -35,4 +35,10 @@ sealed class Screen {
 
     @Serializable
     data object AuthNavHostScreen: Screen()
+
+    @Serializable
+    data object AguaDiariaScreen: Screen()
+
+    @Serializable
+    data object EjerciciosScreen: Screen()
 }

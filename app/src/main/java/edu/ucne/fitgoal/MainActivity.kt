@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
 import edu.ucne.fitgoal.presentation.navigation.AuthNavHost
 import edu.ucne.fitgoal.ui.theme.FitGoalTheme
+import edu.ucne.fitgoal.util.clearAppNotifications
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -16,7 +17,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             FitGoalTheme {
                 AuthNavHost()
+                clearAppNotifications(this)
             }
         }
     }
 }
+
+

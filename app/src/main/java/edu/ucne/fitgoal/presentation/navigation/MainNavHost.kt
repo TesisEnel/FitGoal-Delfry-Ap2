@@ -2,6 +2,8 @@ package edu.ucne.fitgoal.presentation.navigation
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -12,12 +14,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.ucne.fitgoal.MainActivity
+import edu.ucne.fitgoal.presentation.aguadiaria.HorarioScreen
 import edu.ucne.fitgoal.presentation.calculadora.CalculadoraScreen
 import edu.ucne.fitgoal.presentation.ejercicio.EjercicioScreen
 import edu.ucne.fitgoal.presentation.home.HomeScreen
-import edu.ucne.fitgoal.presentation.perfil.PerfilScreen
 import edu.ucne.fitgoal.presentation.planificador.PlanificadorScreen
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainNavHost(
     navHostController: NavHostController = rememberNavController()
@@ -38,7 +41,7 @@ fun MainNavHost(
                         navHostController.navigate(Screen.PerfilScreen)
                     },
                     goToReloj = {
-                        navHostController.navigate(Screen.RelojScreen)
+
                     },
                     onDrawer = {
 
@@ -46,24 +49,13 @@ fun MainNavHost(
                 )
             }
 
-            composable<Screen.PerfilScreen> {
-                PerfilScreen(
-                    goToPlanificador = {
-                        navHostController.navigate(Screen.PlanificadorScreen)
-                    },
-                    goToReloj = {
-                        navHostController.navigate(Screen.RelojScreen)
-                    },
-                    onDrawer = {
-
-                    }
-                )
+            composable<Screen.AguaDiariaScreen> {
+                HorarioScreen()
             }
-            composable<Screen.RelojScreen> {
+            composable<Screen.EjerciciosScreen> {
                 EjercicioScreen()
             }
             composable<Screen.CalculadoraScreen> {
-
                 CalculadoraScreen(
                     goToPlanificador = {
                         navHostController.navigate(Screen.PlanificadorScreen)

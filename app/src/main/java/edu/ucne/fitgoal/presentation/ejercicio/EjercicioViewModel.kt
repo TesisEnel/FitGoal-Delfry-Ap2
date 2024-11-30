@@ -49,8 +49,10 @@ class EjercicioViewModel @Inject constructor(
                         _uiState.value = _uiState.value.copy(
                             error = "",
                             isLoading = false,
-                            ejercicios = result.data ?: emptyList()
+                            ejercicios = result.data ?: emptyList(),
+                            filtro = ""
                         )
+                        filterEjercicios("")
                     }
 
                     is Resource.Error -> {
