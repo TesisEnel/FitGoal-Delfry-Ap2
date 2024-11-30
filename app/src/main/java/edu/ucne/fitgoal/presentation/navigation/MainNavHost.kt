@@ -82,12 +82,6 @@ fun MainNavHost(
             }
             composable<Screen.HomeScreen> {
                 HomeScreen(
-                    goLogin = {
-                        navHostController.navigate(Screen.AuthNavHostScreen) {
-                            popUpTo(0) { inclusive = true }
-                            launchSingleTop = true
-                        }
-                    },
                     goPerfil = {
                         navHostController.navigate(Screen.PerfilScreen)
                     }
