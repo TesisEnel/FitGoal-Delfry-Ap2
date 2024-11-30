@@ -1,26 +1,42 @@
 package edu.ucne.fitgoal.data.repository
 
+import edu.ucne.fitgoal.data.local.dao.UsuarioDao
+import edu.ucne.fitgoal.data.local.entities.UsuarioEntity
 import edu.ucne.fitgoal.data.remote.RemoteDataSource
 import edu.ucne.fitgoal.data.remote.Resource
-import edu.ucne.fitgoal.data.remote.dto.PerfilDto
+import edu.ucne.fitgoal.data.remote.dto.toEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class PerfilRepository @Inject constructor (
-    private val remoteDataSource: RemoteDataSource
-){
-    fun getPerfil(): Flow<Resource<List<PerfilDto>>> = flow {
+class PerfilRepository @Inject constructor(
+    private val remoteDataSource: RemoteDataSource,
+    private val usuarioDao: UsuarioDao
+) {
+    fun getUsuario(id: String): Flow<Resource<UsuarioEntity>> = flow {
         try {
             emit(Resource.Loading())
-            val clientes = remoteDataSource.getPerfil()
-            emit(Resource.Success(clientes))
+            val usuarioDto = remoteDataSource.getUsuario(id)
+            val usuarioEntity = usuarioDto.toEntity()
+            usuarioDao.save(usuarioEntity)
+            emit(Resource.Success(usuarioEntity))
         } catch (e: HttpException) {
-            val errorMessage = e.response()?.errorBody()?.string() ?: e.message()
-            emit(Resource.Error("Error de conexion $errorMessage"))
+            val usuarioLocal = usuarioDao.getUsuarioById(id).firstOrNull()
+            if (usuarioLocal != null) {
+                emit(Resource.Success(usuarioLocal))
+            } else {
+                emit(Resource.Error("No se encontraron datos locales"))
+            }
         } catch (e: Exception) {
-            emit(Resource.Error("Error ${e.message}"))
+            val usuarioLocal = usuarioDao.getUsuarioById(id).firstOrNull()
+            if (usuarioLocal != null) {
+                emit(Resource.Success(usuarioLocal))
+            } else {
+                emit(Resource.Error("Error: ${e.message}"))
+            }
         }
     }
 }
+

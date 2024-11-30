@@ -28,4 +28,7 @@ interface UsuarioDao {
 
     @Delete
     suspend fun delete(usuario: UsuarioEntity)
+
+    @Query("SELECT * FROM Usuarios WHERE usuarioId = :id LIMIT 1")
+    fun getUsuarioById(id: String): Flow<UsuarioEntity?>
 }

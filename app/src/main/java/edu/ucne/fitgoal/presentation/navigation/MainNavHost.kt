@@ -18,6 +18,7 @@ import edu.ucne.fitgoal.presentation.aguadiaria.HorarioScreen
 import edu.ucne.fitgoal.presentation.calculadora.CalculadoraScreen
 import edu.ucne.fitgoal.presentation.ejercicio.EjercicioScreen
 import edu.ucne.fitgoal.presentation.home.HomeScreen
+import edu.ucne.fitgoal.presentation.perfil.PerfilScreen
 import edu.ucne.fitgoal.presentation.planificador.PlanificadorScreen
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -41,7 +42,7 @@ fun MainNavHost(
                         navHostController.navigate(Screen.PerfilScreen)
                     },
                     goToReloj = {
-
+                        navHostController.navigate(Screen.RelojScreen)
                     },
                     onDrawer = {
 
@@ -49,12 +50,20 @@ fun MainNavHost(
                 )
             }
 
+            composable<Screen.PerfilScreen> {
+                PerfilScreen(
+                    navController = navHostController
+                )
+            }
+
             composable<Screen.AguaDiariaScreen> {
                 HorarioScreen()
             }
+
             composable<Screen.EjerciciosScreen> {
                 EjercicioScreen()
             }
+
             composable<Screen.CalculadoraScreen> {
                 CalculadoraScreen(
                     goToPlanificador = {
@@ -73,11 +82,8 @@ fun MainNavHost(
             }
             composable<Screen.HomeScreen> {
                 HomeScreen(
-                    goLogin = {
-                        navHostController.navigate(Screen.AuthNavHostScreen){
-                            popUpTo(0) { inclusive = true }
-                            launchSingleTop = true
-                        }
+                    goPerfil = {
+                        navHostController.navigate(Screen.PerfilScreen)
                     }
                 )
             }
