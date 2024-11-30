@@ -9,6 +9,7 @@ data class PerfilUiState(
     val pesoIdeal: Float = 0.0f,
     val aguaDiaria: Float = 0.0f,
     val uid: String = "",
+    val photoUrl: String? = null,
     val isLoading: Boolean = false,
     val error: String = "",
     val isModalErrorVisible: Boolean = false
