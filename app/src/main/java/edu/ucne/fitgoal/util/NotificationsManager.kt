@@ -19,6 +19,20 @@ class WaterReminderReceiver : BroadcastReceiver() {
         val message = intent.getStringExtra("message") ?: "Es momento de tomar agua."
 
         showNotification(context, title, message)
+
+        val calendar = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_YEAR, 1)
+            set(Calendar.HOUR_OF_DAY, getTimeFromIntent(intent, "hour"))
+            set(Calendar.MINUTE, getTimeFromIntent(intent, "minute"))
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        scheduleReminder(context, calendar.timeInMillis, title, message)
+    }
+
+    private fun getTimeFromIntent(intent: Intent, key: String): Int {
+        return intent.getIntExtra(key, 0)
     }
 
     private fun showNotification(context: Context, title: String, message: String) {
@@ -65,9 +79,15 @@ class WaterReminderReceiver : BroadcastReceiver() {
 fun scheduleReminder(context: Context, timeInMillis: Long, title: String, message: String) {
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+    val calendar = Calendar.getInstance().apply {
+        setTimeInMillis(timeInMillis)
+    }
+
     val intent = Intent(context, WaterReminderReceiver::class.java).apply {
         putExtra("title", title)
         putExtra("message", message)
+        putExtra("hour", calendar.get(Calendar.HOUR_OF_DAY))
+        putExtra("minute", calendar.get(Calendar.MINUTE))
     }
 
     val pendingIntent = PendingIntent.getBroadcast(
@@ -83,6 +103,7 @@ fun scheduleReminder(context: Context, timeInMillis: Long, title: String, messag
         pendingIntent
     )
 }
+
 
 fun getTimeInMillis(hour: Int, minute: Int): Long {
     val calendar = Calendar.getInstance().apply {

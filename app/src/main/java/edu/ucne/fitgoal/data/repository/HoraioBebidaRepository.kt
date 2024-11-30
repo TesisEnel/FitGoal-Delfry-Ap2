@@ -47,23 +47,19 @@ class HoraioBebidaRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteHorarioBebida(id: Int): Resource<Unit> {
+    suspend fun deleteHorarioBebida(id: Int): Resource<Boolean> {
         return try {
             remoteDataSource.deleteHorarioBebida(id)
             val horarioBebida = horarioBebidaDao.find(id)
             if (horarioBebida != null) {
                 horarioBebidaDao.delete(horarioBebida)
             }
-            Resource.Success(Unit)
+            Resource.Success(true)
         } catch (e: HttpException) {
             val errorMessage = e.response()?.errorBody()?.string() ?: e.message()
             Resource.Error("Error de conexion $errorMessage")
-        } catch (e: Exception) {
-            val horarioBebida = horarioBebidaDao.find(id)
-            if (horarioBebida != null) {
-                horarioBebidaDao.delete(horarioBebida)
-            }
-            Resource.Success(Unit)
+        }catch (e: Exception) {
+            Resource.Error("Error ${e.message}")
         }
     }
 

@@ -14,7 +14,8 @@ data class UiState(
     val horaError: String = "",
     val horarioBebidaId: Int = 0,
     val usuarioId: String = "",
-    val update: Boolean = false
+    val update: Boolean = false,
+    val canDelete: Boolean = true
 )
 
 fun UiState.toDto() = HorarioBebidaDto(

@@ -59,7 +59,7 @@ interface FitGoalApi {
 
     @Headers("X-API-Key:${API_KEY}")
     @DELETE("api/HorarioBebidas/{id}")
-    suspend fun deleteHorarioBebida(@Path("id") id: Int)
+    suspend fun deleteHorarioBebida(@Path("id") id: Int): Response<Unit>
 
     @Headers("X-API-Key:${API_KEY}")
     @POST("api/HorarioBebidas")

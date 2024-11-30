@@ -169,14 +169,14 @@ fun HorarioScreen(
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.Top
                 ) {
-                    items(uiState.horarios, key = { it.horarioBebidaId }) { horario ->
+                    items(uiState.horarios, key = { it.horarioBebidaId!! }) { horario ->
                         val coroutineScope = rememberCoroutineScope()
                         val dismissState = rememberSwipeToDismissBoxState(
                             confirmValueChange = { state ->
                                 if (state == SwipeToDismissBoxValue.EndToStart) {
                                     coroutineScope.launch {
                                         delay(0.5.seconds)
-                                        onEvent(HorarioBebidaEvent.DeleteHorarioBebida(horario.horarioBebidaId))
+                                        onEvent(HorarioBebidaEvent.DeleteHorarioBebida(horario.horarioBebidaId!!))
                                     }
                                     true
                                 } else {
@@ -188,6 +188,7 @@ fun HorarioScreen(
                         SwipeToDismissBox(
                             state = dismissState,
                             enableDismissFromStartToEnd = false,
+                            enableDismissFromEndToStart = uiState.canDelete,
                             backgroundContent = {
                                 val color by animateColorAsState(
                                     when (dismissState.targetValue) {
@@ -218,7 +219,7 @@ fun HorarioScreen(
                                     .fillMaxWidth()
                                     .padding(4.dp)
                                     .border(2.dp, LightGreen, shape = RoundedCornerShape(8.dp))
-                                    .clickable { onEvent(HorarioBebidaEvent.SelectHorariosBebida(horario.horarioBebidaId)) },
+                                    .clickable { onEvent(HorarioBebidaEvent.SelectHorariosBebida(horario.horarioBebidaId!!)) },
                                 elevation = CardDefaults.elevatedCardElevation(8.dp),
                                 shape = RoundedCornerShape(8.dp),
                                 colors = CardDefaults.cardColors(

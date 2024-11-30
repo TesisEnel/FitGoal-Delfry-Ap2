@@ -39,7 +39,10 @@ class HorarioBebidaViewModel @Inject constructor(
             HorarioBebidaEvent.SaveHorarioBebida -> save()
             is HorarioBebidaEvent.SelectHorariosBebida -> selectHorarioBebida(event.id)
             HorarioBebidaEvent.CloseModalError -> closeModalError()
-            is HorarioBebidaEvent.GetHorarioBebidas -> getHorarioBebidas(authRepository.getCurrentUid()!!, event.context)
+            is HorarioBebidaEvent.GetHorarioBebidas -> getHorarioBebidas(
+                authRepository.getCurrentUid()!!,
+                event.context
+            )
         }
     }
 
@@ -62,7 +65,11 @@ class HorarioBebidaViewModel @Inject constructor(
 
                     is Resource.Error -> {
                         _uiState.value =
-                            _uiState.value.copy(isLoading = false, error = result.message ?: "")
+                            _uiState.value.copy(
+                                isLoading = false,
+                                error = result.message ?: "",
+                                canDelete = false
+                            )
                     }
                 }
             }
@@ -85,13 +92,18 @@ class HorarioBebidaViewModel @Inject constructor(
                             horarioBebidaId = result.data?.horarioBebidaId ?: 0,
                             usuarioId = result.data?.usuarioId ?: "",
                             isModalVisible = true,
-                            error = ""
+                            error = "",
+                            canDelete = true
                         )
                     }
 
                     is Resource.Error -> {
                         _uiState.value =
-                            _uiState.value.copy(isLoading = false, error = result.message ?: "")
+                            _uiState.value.copy(
+                                isLoading = false,
+                                error = result.message ?: "",
+                                canDelete = false
+                            )
                     }
                 }
             }
@@ -99,67 +111,76 @@ class HorarioBebidaViewModel @Inject constructor(
         }
     }
 
-    private fun saveHorarioBebida() = viewModelScope.launch {
+    private suspend fun saveHorarioBebida()  {
         val horario = _uiState.value.toDto()
         horarioBebidaRepository.postHorarioBebida(horario).collectLatest { result ->
             when (result) {
                 is Resource.Loading -> {
-                    _uiState.value = _uiState.value.copy(isLoading = true)
+                    _uiState.value =
+                        _uiState.value.copy(isLoading = true, isModalVisible = false)
                 }
 
                 is Resource.Success -> {
-                    _uiState.value =
-                        _uiState.value.copy(isModalVisible = false, update = true, error = "")
+                    _uiState.value = _uiState.value.copy(
+                        error = "",
+                        update = true,
+                        canDelete = true
+                    )
                 }
 
                 is Resource.Error -> {
                     _uiState.value =
-                        _uiState.value.copy(isLoading = false, error = result.message ?: "")
+                        _uiState.value.copy(
+                            isLoading = false,
+                            error = result.message ?: "",
+                            canDelete = false
+                        )
                 }
             }
         }
     }
 
-    private fun updateHorarioBebida() {
-        viewModelScope.launch {
-            val horarioBebida = _uiState.value.toDto()
-            if (horarioBebida.horarioBebidaId > 0) {
-                horarioBebidaRepository.putHorarioBebida(
-                    _uiState.value.horarioBebidaId,
-                    horarioBebida
-                )
-                    .collectLatest { result ->
-                        when (result) {
-                            is Resource.Loading -> {
-                                _uiState.value =
-                                    _uiState.value.copy(isLoading = true, isModalVisible = false)
-                            }
-
-                            is Resource.Success -> {
-                                _uiState.value = _uiState.value.copy(error = "", update = true)
-                            }
-
-                            is Resource.Error -> {
-                                _uiState.value =
-                                    _uiState.value.copy(
-                                        isLoading = false,
-                                        error = result.message ?: ""
-                                    )
-                            }
-                        }
+    private suspend fun updateHorarioBebida() {
+        val horarioBebida = _uiState.value.toDto()
+        if (horarioBebida.horarioBebidaId > 0) {
+            horarioBebidaRepository.putHorarioBebida(
+                _uiState.value.horarioBebidaId,
+                horarioBebida
+            ).collectLatest { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _uiState.value =
+                            _uiState.value.copy(isLoading = true, isModalVisible = false)
                     }
+
+                    is Resource.Success -> {
+                        _uiState.value = _uiState.value.copy(
+                            error = "",
+                            update = true,
+                            canDelete = true
+                        )
+                    }
+
+                    is Resource.Error -> {
+                        _uiState.value =
+                            _uiState.value.copy(
+                                isLoading = false,
+                                error = result.message ?: "",
+                                canDelete = false
+                            )
+                    }
+                }
             }
         }
     }
 
-    private fun save() {
+    private fun save() = viewModelScope.launch {
         if (validate()) {
             if (_uiState.value.horarioBebidaId > 0) {
                 updateHorarioBebida()
             } else {
                 saveHorarioBebida()
             }
-            closeModal()
         }
     }
 
@@ -173,15 +194,17 @@ class HorarioBebidaViewModel @Inject constructor(
 
                     is Resource.Success -> {
                         _uiState.value = _uiState.value.copy(
-                            update = true
+                            update = true,
+                            canDelete = true
                         )
-
                     }
 
                     is Resource.Error -> {
                         _uiState.value = _uiState.value.copy(
                             isLoading = false,
-                            error = result.message ?: ""
+                            error = result.message ?: "",
+                            update = true,
+                            canDelete = false
                         )
                     }
                 }
@@ -208,9 +231,9 @@ class HorarioBebidaViewModel @Inject constructor(
 
     private fun validate(): Boolean {
         var isValid = true
-        if (_uiState.value.cantidad <= 100) {
+        if (_uiState.value.cantidad < 100 || _uiState.value.cantidad >= 1000) {
             _uiState.value =
-                _uiState.value.copy(cantidadError = "La cantidad debe ser mayor a 100Ml")
+                _uiState.value.copy(cantidadError = "La cantidad ser 100ML a 1000Ml")
             isValid = false
         }
         if (_uiState.value.hora.isEmpty()) {
@@ -221,13 +244,14 @@ class HorarioBebidaViewModel @Inject constructor(
     }
 
     private fun onCantidadChange(cantidad: String) {
-        val regex = Regex("[0-9]{0,5}\\.?[0-9]{0,2}")
         val cantidadFloat = cantidad.toFloatOrNull() ?: 0f
-        if (regex.matches(cantidad)) {
-            _uiState.value = _uiState.value.copy(cantidad = cantidadFloat, cantidadError = "")
-        } else {
-            _uiState.value =
-                _uiState.value.copy(cantidadError = "La cantidad debe ser un intervalo de 100-1000Ml")
+        if (cantidadFloat in 1.0..1000.0)
+            _uiState.value = _uiState.value.copy(cantidad = cantidadFloat)
+
+        if(cantidadFloat !in 100.0..1000.0){
+            _uiState.value = _uiState.value.copy(cantidadError = "La cantidad ser 100ML a 1000Ml")
+        }else{
+            _uiState.value = _uiState.value.copy(cantidadError = "")
         }
     }
 
@@ -247,8 +271,5 @@ class HorarioBebidaViewModel @Inject constructor(
                 "Toma ${horario.cantidad.toInt()} ml de agua"
             )
         }
-
     }
-
-
 }

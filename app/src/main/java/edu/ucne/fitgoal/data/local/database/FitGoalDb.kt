@@ -18,7 +18,7 @@ import edu.ucne.fitgoal.data.local.entities.UsuarioEntity
         EjercicioEntity::class,
         HorarioBebidaEntity::class
                ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class FitGoalDb : RoomDatabase(){
