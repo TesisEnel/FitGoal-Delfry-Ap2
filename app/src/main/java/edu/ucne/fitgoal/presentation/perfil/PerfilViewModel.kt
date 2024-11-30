@@ -30,6 +30,13 @@ class PerfilViewModel @Inject constructor(
         val currentUser: FirebaseUser? = firebaseAuth.currentUser
         if (currentUser != null) {
             val userId = currentUser.uid
+            val photoUrl = currentUser.photoUrl?.toString()
+            _uiState.update { state ->
+                state.copy(
+                    uid = userId,
+                    photoUrl = photoUrl
+                )
+            }
             getUsuarioFromApi(userId)
         } else {
             _uiState.update { state ->
