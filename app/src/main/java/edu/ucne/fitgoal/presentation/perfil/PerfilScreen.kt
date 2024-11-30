@@ -32,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import coil3.compose.AsyncImage
 import edu.ucne.fitgoal.presentation.components.LoadingIndicator
 import edu.ucne.fitgoal.presentation.components.ModalError
 import edu.ucne.fitgoal.presentation.navigation.Screen
@@ -76,12 +78,23 @@ fun PerfilScreen(
                             .background(Color.Gray, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "Foto de perfil",
-                            tint = Color.White,
-                            modifier = Modifier.size(50.dp)
-                        )
+                        if (uiState.value.photoUrl != null) {
+                            AsyncImage(
+                                model = uiState.value.photoUrl,
+                                contentDescription = "Foto de perfil",
+                                modifier = Modifier
+                                    .size(100.dp)
+                                    .clip(CircleShape)
+                                    .background(Color.Gray, CircleShape)
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = "Foto de perfil",
+                                tint = Color.White,
+                                modifier = Modifier.size(50.dp)
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
