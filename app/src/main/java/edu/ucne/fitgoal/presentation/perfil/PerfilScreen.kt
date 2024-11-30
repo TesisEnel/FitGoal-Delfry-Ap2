@@ -104,12 +104,6 @@ fun PerfilScreen(
                     color = Color.Gray
                 )
 
-                Text(
-                    text = "UID: ${uiState.value.uid}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Gray
-                )
-
                 Spacer(modifier = Modifier.height(30.dp))
 
                 Card(

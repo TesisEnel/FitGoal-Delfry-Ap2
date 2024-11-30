@@ -36,7 +36,6 @@ class PerfilViewModel @Inject constructor(
 
             _uiState.update { state ->
                 state.copy(
-                    uid = userId,
                     nombre = displayName,
                     correo = email,
                     photoUrl = photoUrl.toString()
@@ -71,7 +70,6 @@ class PerfilViewModel @Inject constructor(
                                     pesoActual = usuario.pesoActual,
                                     pesoIdeal = usuario.pesoIdeal,
                                     aguaDiaria = usuario.aguaDiaria,
-                                    uid = usuario.usuarioId,
                                     isLoading = false,
                                     error = ""
                                 )
