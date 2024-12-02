@@ -5,10 +5,12 @@ import androidx.room.RoomDatabase
 import edu.ucne.fitgoal.data.local.dao.EjercicioDao
 import edu.ucne.fitgoal.data.local.dao.FitGoalDao
 import edu.ucne.fitgoal.data.local.dao.HorarioBebidaDao
+import edu.ucne.fitgoal.data.local.dao.TipDao
 import edu.ucne.fitgoal.data.local.dao.UsuarioDao
 import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
 import edu.ucne.fitgoal.data.local.entities.FitGoalEntity
 import edu.ucne.fitgoal.data.local.entities.HorarioBebidaEntity
+import edu.ucne.fitgoal.data.local.entities.TipEntity
 import edu.ucne.fitgoal.data.local.entities.UsuarioEntity
 
 @Database(
@@ -16,9 +18,10 @@ import edu.ucne.fitgoal.data.local.entities.UsuarioEntity
         FitGoalEntity::class,
         UsuarioEntity::class,
         EjercicioEntity::class,
-        HorarioBebidaEntity::class
+        HorarioBebidaEntity::class,
+        TipEntity::class
                ],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 abstract class FitGoalDb : RoomDatabase(){
@@ -26,4 +29,5 @@ abstract class FitGoalDb : RoomDatabase(){
     abstract fun usuarioDao(): UsuarioDao
     abstract fun ejercicioDao(): EjercicioDao
     abstract fun horarioBebidaDao(): HorarioBebidaDao
+    abstract fun tipDao(): TipDao
 }
