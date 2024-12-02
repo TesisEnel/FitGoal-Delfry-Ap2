@@ -1,6 +1,7 @@
 package edu.ucne.fitgoal.data.remote
 
 import edu.ucne.fitgoal.data.remote.dto.HorarioBebidaDto
+import edu.ucne.fitgoal.data.remote.dto.TipDto
 import edu.ucne.fitgoal.data.remote.dto.UsuarioDto
 import javax.inject.Inject
 
@@ -22,4 +23,6 @@ class RemoteDataSource @Inject constructor(
     suspend fun putHorarioBebida(id: Int, horarioBebidaDto: HorarioBebidaDto) = fitGoalApi.putHorarioBebida(id, horarioBebidaDto)
     suspend fun deleteHorarioBebida(id: Int) = fitGoalApi.deleteHorarioBebida(id)
     suspend fun postHorarioBebida(horarioBebidaDto: HorarioBebidaDto) = fitGoalApi.postHorarioBebida(horarioBebidaDto)
+
+    suspend fun getTips(): List<TipDto> = fitGoalApi.getTips()
 }
