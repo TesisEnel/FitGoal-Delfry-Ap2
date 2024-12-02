@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.request.crossfade
 import com.google.firebase.auth.FirebaseAuth
+import edu.ucne.fitgoal.ui.theme.DarkGreen
 
 @Composable
 fun HomeScreen(
@@ -131,7 +132,7 @@ fun HomeScreen(
                                         imageVector = Icons.Default.TipsAndUpdates,
                                         contentDescription = "",
                                         modifier = Modifier.size(24.dp),
-                                        tint = MaterialTheme.colorScheme.primary
+                                        tint = DarkGreen
                                     )
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Text(
