@@ -5,6 +5,7 @@ import edu.ucne.fitgoal.data.remote.dto.HorarioBebidaDto
 import edu.ucne.fitgoal.data.remote.dto.PerfilDto
 import edu.ucne.fitgoal.data.remote.dto.PlanificadorDto
 import edu.ucne.fitgoal.data.remote.dto.RelojDto
+import edu.ucne.fitgoal.data.remote.dto.TipDto
 import edu.ucne.fitgoal.data.remote.dto.UsuarioDto
 import edu.ucne.fitgoal.util.Constants.API_KEY
 import retrofit2.Response
@@ -64,4 +65,8 @@ interface FitGoalApi {
     @Headers("X-API-Key:${API_KEY}")
     @POST("api/HorarioBebidas")
     suspend fun postHorarioBebida(@Body horarioBebidaDto: HorarioBebidaDto): HorarioBebidaDto
+
+    @Headers("X-API-Key:${API_KEY}")
+    @GET("api/Tips")
+    suspend fun getTips(): List<TipDto>
 }
