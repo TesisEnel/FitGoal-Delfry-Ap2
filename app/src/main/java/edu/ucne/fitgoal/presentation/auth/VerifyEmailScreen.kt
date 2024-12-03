@@ -116,9 +116,9 @@ fun VerifyEmailScreen(
                     colors = ButtonDefaults.buttonColors(DarkGreen),
                     modifier = Modifier
                         .padding(horizontal = 70.dp)
-                        .fillMaxWidth(0.6f),
+                        .fillMaxWidth(0.9f),
                     shape = RoundedCornerShape(16.dp),
-                    contentPadding = PaddingValues(vertical = 10.dp),
+                    contentPadding = PaddingValues(vertical = 8.dp),
                     enabled = uiState.isButtonEnabled
                 ) {
                     Text(
@@ -130,7 +130,7 @@ fun VerifyEmailScreen(
                 }
                 if(!uiState.isButtonEnabled){
                     Text(
-                        text = "Tiempo restante: ${uiState.tiempo}",
+                        text = "Tiempo restante para reenviar correo: %02d:%02d".format(uiState.tiempo/60, uiState.tiempo%60),
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold
                     )
