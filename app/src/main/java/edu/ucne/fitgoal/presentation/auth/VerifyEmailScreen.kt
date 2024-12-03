@@ -116,9 +116,9 @@ fun VerifyEmailScreen(
                     colors = ButtonDefaults.buttonColors(DarkGreen),
                     modifier = Modifier
                         .padding(horizontal = 70.dp)
-                        .fillMaxWidth(0.6f),
+                        .fillMaxWidth(0.9f),
                     shape = RoundedCornerShape(16.dp),
-                    contentPadding = PaddingValues(vertical = 10.dp),
+                    contentPadding = PaddingValues(vertical = 8.dp),
                     enabled = uiState.isButtonEnabled
                 ) {
                     Text(
