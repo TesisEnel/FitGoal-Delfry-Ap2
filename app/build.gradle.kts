@@ -141,4 +141,6 @@ dependencies {
 
     implementation (libs.datetime)
     coreLibraryDesugaring (libs.desugar.jdk.libs)
+
+    implementation (libs.androidx.work.runtime.ktx)
 }
