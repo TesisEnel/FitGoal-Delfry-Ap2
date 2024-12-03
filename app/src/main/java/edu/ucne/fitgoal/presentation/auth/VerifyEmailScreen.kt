@@ -130,7 +130,7 @@ fun VerifyEmailScreen(
                 }
                 if(!uiState.isButtonEnabled){
                     Text(
-                        text = "Tiempo restante: ${uiState.tiempo}",
+                        text = "Tiempo restante para reenviar correo: %02d:%02d".format(uiState.tiempo/60, uiState.tiempo%60),
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold
                     )
