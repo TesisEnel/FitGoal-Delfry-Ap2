@@ -237,6 +237,7 @@ class AuthViewModel @Inject constructor(
                                 error = "",
                                 isLoading = false
                             )
+                            startTimerButtonOff()
                             goLogin()
                         }
 
@@ -270,10 +271,6 @@ class AuthViewModel @Inject constructor(
                             _uiState.value = _uiState.value.copy(isAuthorized = true)
                             _uiState.value =
                                 _uiState.value.copy(isEmailVerified = authRepository.isEmailVerified())
-                            val isVerified = authRepository.isEmailVerified()
-                            if (!isVerified) {
-                                enviarEmailVerificacion()
-                            }
                             _uiState.value = _uiState.value.copy(
                                 error = "",
                                 isLoading = false
