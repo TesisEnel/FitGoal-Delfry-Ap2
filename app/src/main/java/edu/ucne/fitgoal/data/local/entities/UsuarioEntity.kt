@@ -14,6 +14,7 @@ data class UsuarioEntity(
     val correo: String = "",
     val edad: Int = 0,
     val altura: Float = 0.0f,
+    val pesoInicial: Float = 0.0f,
     val pesoActual: Float = 0.0f,
     val pesoIdeal: Float = 0.0f,
     val aguaDiaria: Float = 0.0f

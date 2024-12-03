@@ -68,6 +68,7 @@ class PerfilViewModel @Inject constructor(
                                     correo = usuario.correo,
                                     edad = usuario.edad,
                                     altura = usuario.altura,
+                                    pesoInicial = usuario.pesoInicial,
                                     pesoActual = usuario.pesoActual,
                                     pesoIdeal = usuario.pesoIdeal,
                                     aguaDiaria = usuario.aguaDiaria,
