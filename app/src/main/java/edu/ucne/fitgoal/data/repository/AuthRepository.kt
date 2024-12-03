@@ -22,6 +22,7 @@ import edu.ucne.fitgoal.data.remote.dto.toEntity
 import edu.ucne.fitgoal.util.Constants.ID_WEB_CLIENT
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -41,11 +42,10 @@ class AuthRepository @Inject constructor(
             if (result.user != null) {
                 emit(Resource.Success(true))
             } else {
-                emit(Resource.Error("Credenciales incorrectas"))
+                emit(Resource.Error("Error al iniciar sesión"))
             }
         } catch (e: FirebaseAuthInvalidCredentialsException) {
-            e.printStackTrace()
-            emit(Resource.Error(e.message.toString()))
+            emit(Resource.Error("Las credenciales son incorrectas"))
         }
     }
 
@@ -59,10 +59,11 @@ class AuthRepository @Inject constructor(
                 val updatedUsuarioDto = usuarioDto.copy(usuarioId = user.uid)
                 val usuario = remoteDataSource.postUsuario(updatedUsuarioDto)
                 usuarioDao.save(usuario.toEntity())
+                sendEmailVerification().last()
                 firebaseAuth.signOut()
                 emit(Resource.Success(true))
             } else {
-                emit(Resource.Error("Registration failed"))
+                emit(Resource.Error("Error al crear usuario"))
             }
         } catch (e: FirebaseAuthUserCollisionException) {
             emit(Resource.Error("Ya existe una cuenta con este correo"))
