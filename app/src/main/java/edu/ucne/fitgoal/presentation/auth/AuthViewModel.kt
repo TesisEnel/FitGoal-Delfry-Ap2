@@ -6,10 +6,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import edu.ucne.fitgoal.data.remote.Resource
 import edu.ucne.fitgoal.data.repository.AuthRepository
 import edu.ucne.fitgoal.presentation.navigation.Screen
+import edu.ucne.fitgoal.util.CountdownWorker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
@@ -31,6 +37,7 @@ class AuthViewModel @Inject constructor(
 
     init {
         _emailVerified.value = false
+        checkTimer()
     }
 
     fun onEvent(event: AuthEvent) {
@@ -128,21 +135,58 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun desactivarBoton() {
+    private fun startTimerButtonOff() {
+        _uiState.value = _uiState.value.copy(isButtonEnabled = false)
+
+        val endTime = System.currentTimeMillis() + 90 * 1000
+        val workRequest = OneTimeWorkRequestBuilder<CountdownWorker>()
+            .setInputData(workDataOf("endTime" to endTime))
+            .build()
+
+        WorkManager.getInstance(context).enqueue(workRequest)
+
+        val sharedPreferences = context.getSharedPreferences("TimerPrefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putLong("endTime", endTime).apply()
+
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isButtonEnabled = false)
-            var tiempo = 15
-            while (tiempo > 0) {
-                _uiState.value = _uiState.value.copy(tiempo = tiempo)
+            while (true) {
+                val currentTime = System.currentTimeMillis()
+                val tiempoRestante = ((endTime - currentTime) / 1000).toInt()
+                if (tiempoRestante <= 0) {
+                    _uiState.value = _uiState.value.copy(isButtonEnabled = true, tiempo = 0)
+                    break
+                }
+                _uiState.value = _uiState.value.copy(tiempo = tiempoRestante)
                 delay(1000)
-                tiempo--
             }
-            _uiState.value = _uiState.value.copy(isButtonEnabled = true)
+        }
+    }
+
+    private fun checkTimer(){
+        val sharedPreferences = context.getSharedPreferences("TimerPrefs", Context.MODE_PRIVATE)
+        val endTime = sharedPreferences.getLong("endTime", 0)
+        if (endTime > System.currentTimeMillis()) {
+            _uiState.value = _uiState.value.copy(isButtonEnabled = false)
+
+            viewModelScope.launch {
+                while (true) {
+                    val currentTime = System.currentTimeMillis()
+                    val tiempoRestante = ((endTime - currentTime) / 1000).toInt()
+                    if (tiempoRestante <= 0) {
+                        _uiState.value = _uiState.value.copy(isButtonEnabled = true, tiempo = 0)
+                        break
+                    }
+                    _uiState.value = _uiState.value.copy(tiempo = tiempoRestante)
+                    delay(1000)
+                }
+            }
+        } else {
+            _uiState.value = _uiState.value.copy(isButtonEnabled = true, tiempo = 0)
         }
     }
 
     private fun enviarEmailVerificacion() = viewModelScope.launch {
-        desactivarBoton()
+        startTimerButtonOff()
         authRepository.sendEmailVerification().collectLatest { resource ->
             when (resource) {
                 is Resource.Success -> {
