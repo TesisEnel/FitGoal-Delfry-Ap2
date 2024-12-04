@@ -150,8 +150,8 @@ fun PerfilScreen(
                         Triple("Editar Perfil", Icons.Default.Edit) {
                             perfilViewModel.onEvent(PerfilEvent.NavigateToEditarPerfil, navController)
                         },
-                        Triple("Progreso diario", Icons.Default.CalendarToday) {
-                            perfilViewModel.onEvent(PerfilEvent.NavigateToProgresoDiario, navController)
+                        Triple("Progreso semanal", Icons.Default.CalendarToday) {
+                            perfilViewModel.onEvent(PerfilEvent.NavigateToProgresoSemanal, navController)
                         }
                     )
                 ) { (text, icon, onClick) ->
