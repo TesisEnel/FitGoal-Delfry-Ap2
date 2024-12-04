@@ -116,6 +116,7 @@ fun PlantillaScreen(
     }
 }
 
+
 @Composable
 fun PlantillaItem(
     plantilla: PlantillaDto,
@@ -269,17 +270,24 @@ fun PlantillaItem(
                     text = plantilla.descripcionPlantilla,
                     style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF388E3C))
                 )
-
                 Column {
-                    plantilla.ejercicios.forEach { ejercicio ->
-                        ejercicio.nombreEjercicio?.let {
-                            Text(
-                                text = it,
-                                style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF2E7D32))
-                            )
+                    if (plantilla.ejercicios.isNullOrEmpty()) {
+                        Text(
+                            text = "No hay ejercicios seleccionados",
+                            style = MaterialTheme.typography.bodyMedium.copy(color = Color.Red)
+                        )
+                    } else {
+                        plantilla.ejercicios.forEach { ejercicio ->
+                            ejercicio.nombreEjercicio?.let {
+                                Text(
+                                    text = ejercicio.nombreEjercicio,
+                                    style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF2E7D32))
+                                )
+                            }
                         }
                     }
                 }
+
             }
         }
     }

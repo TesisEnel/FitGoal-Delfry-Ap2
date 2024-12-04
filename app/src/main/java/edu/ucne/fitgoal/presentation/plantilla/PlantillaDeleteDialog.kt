@@ -82,14 +82,10 @@ fun EjercicioItem(
     viewModel: PlantillaViewModel
 ) {
     var showDialog by remember { mutableStateOf(false) }
-    var showDeleteDialog by remember { mutableStateOf(false) }
     var timeInSeconds by remember { mutableIntStateOf(0) }
     var isRunning by remember { mutableStateOf(false) }
-    var isPaused by remember { mutableStateOf(false) }
 
-    var totalRoutineTimeInSeconds by remember { mutableIntStateOf(0) }
-    var isRoutineRunning by remember { mutableStateOf(false) }
-
+    // Formatear el tiempo
     fun formatTime(seconds: Int): String {
         val minutes = seconds / 60
         val remainingSeconds = seconds % 60
@@ -105,51 +101,74 @@ fun EjercicioItem(
         }
     }
 
-    if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Confirmar eliminación") },
-            text = { Text("¿Estás seguro de que deseas eliminar este ejercicio?") },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        viewModel.eliminarPlantilla(plantilla!!.plantillaId)
-                    }
-                ) {
-                    Text("Eliminar", color = Color.Red)
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) {
-                    Text("Cancelar")
-                }
-            }
-        )
-    }
-
     if (showDialog) {
         Dialog(onDismissRequest = { showDialog = false }) {
-            Box(
+            Surface(
+                shape = RoundedCornerShape(16.dp),
+                color = Color.White,
                 modifier = Modifier
-                    .fillMaxWidth()
                     .padding(16.dp)
-                    .background(Color.White)
-                    .clip(RoundedCornerShape(8.dp))
+                    .fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(16.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Image(
+                        painter = rememberAsyncImagePainter(ejercicio.foto),
+                        contentDescription = ejercicio.nombreEjercicio,
+                        modifier = Modifier
+                            .size(128.dp)
+                            .padding(bottom = 16.dp),
+                        contentScale = ContentScale.Crop
+                    )
+
+                    Text(
+                        text = ejercicio.nombreEjercicio ?: "Ejercicio",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+
                     ejercicio.descripcion?.let {
                         Text(
                             text = it,
-                            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                            color = MaterialTheme.colorScheme.primary,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Gray,
                             modifier = Modifier.padding(bottom = 16.dp)
                         )
                     }
-                    TextButton(onClick = { showDialog = false }) {
+
+                    Text(
+                        text = formatTime(timeInSeconds),
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Color.Black,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        IconButton(onClick = { isRunning = true }) {
+                            Icon(Icons.Default.PlayArrow, contentDescription = "Iniciar")
+                        }
+                        IconButton(onClick = { isRunning = false }) {
+                            Icon(Icons.Default.Pause, contentDescription = "Pausar")
+                        }
+                        IconButton(onClick = {
+                            isRunning = false
+                            timeInSeconds = 0
+                        }) {
+                            Icon(Icons.Default.Stop, contentDescription = "Detener")
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Button(onClick = { showDialog = false }) {
                         Text("Cerrar")
                     }
                 }
@@ -160,12 +179,11 @@ fun EjercicioItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                showDialog = true
-            }
+            .clickable { showDialog = true }
             .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+
         Image(
             painter = rememberAsyncImagePainter(ejercicio.foto),
             contentDescription = ejercicio.nombreEjercicio,
@@ -178,59 +196,14 @@ fun EjercicioItem(
         ejercicio.nombreEjercicio?.let {
             Text(
                 text = it,
-                style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f)
             )
         }
 
-        Spacer(modifier = Modifier.weight(1f))
-
         Text(
             text = formatTime(timeInSeconds),
-            style = MaterialTheme.typography.bodyMedium.copy(color = Color.Black)
+            style = MaterialTheme.typography.titleMedium
         )
-    }
-
-
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        IconButton(
-            onClick = {
-                if (!isRoutineRunning) {
-                    isRoutineRunning = true
-                    isRunning = true
-                    isPaused = false
-                }
-            },
-            enabled = !isRoutineRunning
-        ) {
-            Icon(Icons.Default.PlayArrow, contentDescription = "Iniciar Rutina")
-        }
-
-        IconButton(
-            onClick = {
-                isRoutineRunning = false
-                isRunning = false
-                isPaused = true
-            },
-            enabled = isRoutineRunning
-        ) {
-            Icon(Icons.Default.Pause, contentDescription = "Pausar Rutina")
-        }
-
-        IconButton(
-            onClick = {
-                isRoutineRunning = false
-                isRunning = false
-                isPaused = false
-                totalRoutineTimeInSeconds = 0
-                timeInSeconds = 0
-            },
-            enabled = isRoutineRunning || isPaused
-        ) {
-            Icon(Icons.Default.Stop, contentDescription = "Detener Rutina")
-        }
     }
 }

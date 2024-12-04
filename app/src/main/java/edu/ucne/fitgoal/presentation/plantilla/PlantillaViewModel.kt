@@ -10,7 +10,7 @@ import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
 import edu.ucne.fitgoal.data.local.entities.EjerciciosPlantillasEntity
 import edu.ucne.fitgoal.data.local.entities.PlantillaEntity
 import edu.ucne.fitgoal.data.remote.Resource
-import edu.ucne.fitgoal.data.remote.dto.EjerciciosDto
+import edu.ucne.fitgoal.data.remote.dto.EjercicioDto
 import edu.ucne.fitgoal.data.remote.dto.PlantillaDto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -152,9 +152,9 @@ fun PlantillaEntity.toDto(ejercicios: List<EjercicioEntity>): PlantillaDto {
     )
 }
 
-fun EjerciciosDto.toEntity(): EjercicioEntity {
+fun EjercicioDto.toEntity(): EjercicioEntity {
     return EjercicioEntity(
-        ejercicioId = this.ejercicioId,
+        ejercicioId = this.ejercicioId!!,
         nombreEjercicio = this.nombreEjercicio,
         descripcion = this.descripcion,
         foto = this.foto,

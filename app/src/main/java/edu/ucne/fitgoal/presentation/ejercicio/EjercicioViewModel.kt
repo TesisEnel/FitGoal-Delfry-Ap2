@@ -7,32 +7,30 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.fitgoal.data.remote.RemoteDataSource
 import edu.ucne.fitgoal.data.remote.Resource
+import edu.ucne.fitgoal.data.remote.dto.EjercicioDto
 import edu.ucne.fitgoal.data.repository.EjercicioRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import edu.ucne.fitgoal.data.remote.dto.EjerciciosDto
 import kotlinx.coroutines.flow.StateFlow
 
 
 @HiltViewModel
 class EjercicioViewModel @Inject constructor(
     private val ejercicioRepository: EjercicioRepository,
-
     private val remoteDataSource: RemoteDataSource
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
+    private val _estado = MutableStateFlow<Resource<List<EjercicioDto>>>(Resource.Loading())
+    val estado: StateFlow<Resource<List<EjercicioDto>>> = _estado
 
-    private val _estado = MutableStateFlow<Resource<List<EjerciciosDto>>>(Resource.Loading())
-    val estado: StateFlow<Resource<List<EjerciciosDto>>> = _estado
-
-    private val _selectedEjercicios = mutableStateListOf<EjerciciosDto>()
-    val selectedEjercicios: List<EjerciciosDto> get() = _selectedEjercicios
+    private val _selectedEjercicios = mutableStateListOf<EjercicioDto>()
+    val selectedEjercicios: List<EjercicioDto> get() = _selectedEjercicios
 
     init {
         getEjercicios()
@@ -114,17 +112,17 @@ class EjercicioViewModel @Inject constructor(
     }
 
 
-//    fun obtenerEjercicios() {
-//        viewModelScope.launch {
-//            _estado.value = Resource.Loading()
-//            try {
-//                val ejercicios = remoteDataSource.getEjercicios()
-//                _estado.value = Resource.Success(ejercicios)
-//            } catch (e: Exception) {
-//                _estado.value = Resource.Error("No se pudo cargar los ejercicios.")
-//            }
-//        }
-//    }
+    fun obtenerEjercicios() {
+        viewModelScope.launch {
+            _estado.value = Resource.Loading()
+            try {
+                val ejercicios = remoteDataSource.getEjercicios()
+                _estado.value = Resource.Success(ejercicios)
+            } catch (e: Exception) {
+                _estado.value = Resource.Error("No se pudo cargar los ejercicios.")
+            }
+        }
+    }
 
     fun buscarEjercicios(query: String) {
         val currentData = (_estado.value as? Resource.Success)?.data ?: emptyList()
@@ -140,7 +138,7 @@ class EjercicioViewModel @Inject constructor(
             else currentData.filter { it.nombreEjercicio.contains(filtro, ignoreCase = true) }
         )
     }
-    fun toggleEjercicioSeleccionado(ejercicio: EjerciciosDto) {
+    fun toggleEjercicioSeleccionado(ejercicio: EjercicioDto) {
         val index = _selectedEjercicios.indexOfFirst { it.ejercicioId == ejercicio.ejercicioId }
         if (index != -1) {
             _selectedEjercicios.removeAt(index)
@@ -149,7 +147,7 @@ class EjercicioViewModel @Inject constructor(
         }
     }
 
-    fun setRepeticionesYSeries(ejercicio: EjerciciosDto, repeticiones: Int, series: Int) {
+    fun setRepeticionesYSeries(ejercicio: EjercicioDto, repeticiones: Int, series: Int) {
         val index = _selectedEjercicios.indexOfFirst { it.ejercicioId == ejercicio.ejercicioId }
         if (index != -1) {
             _selectedEjercicios[index] = _selectedEjercicios[index].copy(

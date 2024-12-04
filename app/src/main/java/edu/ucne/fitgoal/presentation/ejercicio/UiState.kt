@@ -1,7 +1,6 @@
 package edu.ucne.fitgoal.presentation.ejercicio
 
 import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
-import edu.ucne.fitgoal.data.remote.dto.EjerciciosDto
 
 data class UiState(
     val isLoading: Boolean = false,

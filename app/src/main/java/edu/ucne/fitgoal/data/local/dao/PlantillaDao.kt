@@ -11,7 +11,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
 import edu.ucne.fitgoal.data.local.entities.EjerciciosPlantillasEntity
-import edu.ucne.fitgoal.data.remote.dto.EjerciciosDto
+import edu.ucne.fitgoal.data.remote.dto.EjercicioDto
 
 @Dao
 interface PlantillaDao {
@@ -52,17 +52,17 @@ interface PlantillaDao {
     @Insert
     suspend fun insertEjerciciosPlantillasWithDetails(
         plantillaId: Int,
-        ejercicios: List<EjerciciosDto>
+        ejercicios: List<EjercicioDto>
     ) {
         val relaciones = ejercicios.map {
             EjerciciosPlantillasEntity(
                 plantillaId = plantillaId,
-                ejercicioId = it.ejercicioId
+                ejercicioId = it.ejercicioId!!
             )
         }
         val ejerciciosEntities = ejercicios.map {
             EjercicioEntity(
-                ejercicioId = it.ejercicioId,
+                ejercicioId = it.ejercicioId!!,
                 nombreEjercicio = it.nombreEjercicio,
                 foto = it.foto,
                 repeticiones = it.repeticiones,

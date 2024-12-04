@@ -17,3 +17,5 @@ data class EjercicioEntity(
     val plantillaId: Int? = null,
 )
 
+
+

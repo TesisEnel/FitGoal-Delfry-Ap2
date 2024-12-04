@@ -23,9 +23,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.rememberAsyncImagePainter
 import edu.ucne.fitgoal.data.remote.Resource
-import edu.ucne.fitgoal.data.remote.dto.EjerciciosDto
+import edu.ucne.fitgoal.data.remote.dto.EjercicioDto
 import edu.ucne.fitgoal.presentation.ejercicio.EjercicioViewModel
-
 @Composable
 fun CrearRutinaScreen(
     viewModel: EjercicioViewModel = hiltViewModel(),
@@ -35,12 +34,11 @@ fun CrearRutinaScreen(
     goToCalculadora: () -> Unit,
     goToPlantilla: () -> Unit
 ) {
-
     val estado by viewModel.estado.collectAsState()
     val selectedEjercicios = viewModel.selectedEjercicios
 
     LaunchedEffect(Unit) {
-        viewModel.getEjercicios()
+        viewModel.obtenerEjercicios()
     }
 
     CrearRutinaContent(
@@ -53,7 +51,7 @@ fun CrearRutinaScreen(
             plantillaViewModel.crearPlantilla(
                 nombre = nombre,
                 descripcion = descripcion,
-                ejercicios = selectedEjercicios.map{it.toEntity()},
+                ejercicios = selectedEjercicios.map { it.toEntity() },
                 duracionTotal = timeInSeconds.toString()
             )
             goToPlantilla()
@@ -63,8 +61,9 @@ fun CrearRutinaScreen(
         onFiltrar = viewModel::filtrarEjercicios
     )
 }
-fun convertTimeToSeconds(time: String): Int {
 
+
+fun convertTimeToSeconds(time: String): Int {
     val parts = time.split(":")
     val minutes = if (parts.size > 0) parts[0].toIntOrNull() ?: 0 else 0
     val seconds = if (parts.size > 1) parts[1].toIntOrNull() ?: 0 else 0
@@ -74,13 +73,13 @@ fun convertTimeToSeconds(time: String): Int {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CrearRutinaContent(
-    estado: Resource<List<EjerciciosDto>>,
-    selectedEjercicios: List<EjerciciosDto>,
+    estado: Resource<List<EjercicioDto>>,
+    selectedEjercicios: List<EjercicioDto>,
     onBuscar: (String) -> Unit,
     onFiltrar: (String) -> Unit,
-    onToggleEjercicioSeleccionado: (EjerciciosDto) -> Unit,
+    onToggleEjercicioSeleccionado: (EjercicioDto) -> Unit,
     onSaveRutina: (String, String, String) -> Unit,
-    onSetRepeticionesYSeries: (EjerciciosDto, Int, Int) -> Unit,
+    onSetRepeticionesYSeries: (EjercicioDto, Int, Int) -> Unit,
     onSaveRepsAndSeries: (Int, Int, Int) -> Unit
 ) {
     var busqueda by remember { mutableStateOf("") }
@@ -166,8 +165,10 @@ fun CrearRutinaContent(
                     )
                 }
             }
+
         }
-            if (showDialog) {
+
+        if (showDialog) {
             AlertDialog(
                 onDismissRequest = { showDialog = false },
                 confirmButton = {
@@ -226,18 +227,18 @@ fun CrearRutinaContent(
         }
     }
 }
-
 @Composable
 fun ItemEjercicio(
-    ejercicio: EjerciciosDto,
-    onToggleSeleccionado: (EjerciciosDto) -> Unit,
+    ejercicio: EjercicioDto,
+    onToggleSeleccionado: (EjercicioDto) -> Unit,
     isSelected: Boolean,
-    onSetRepeticionesYSeries: (EjerciciosDto, Int, Int) -> Unit,
+    onSetRepeticionesYSeries: (EjercicioDto, Int, Int) -> Unit,
     onSaveRepsAndSeries: (Int, Int, Int) -> Unit
 ) {
     var showModal by remember { mutableStateOf(false) }
     var repeticiones by remember { mutableStateOf(1) }
     var series by remember { mutableStateOf(1) }
+    var isSaved by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
@@ -257,7 +258,7 @@ fun ItemEjercicio(
                 }
         ) {
             Image(
-               painter = rememberAsyncImagePainter(ejercicio.foto),
+                painter = rememberAsyncImagePainter(ejercicio.foto),
                 contentDescription = null,
                 modifier = Modifier
                     .size(64.dp)
@@ -270,10 +271,14 @@ fun ItemEjercicio(
                     fontSize = 16.sp
                 )
             }
-            Icon(
-                imageVector = if (isSelected) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
-                contentDescription = null
-            )
+            // Mostrar ícono Check solo si el ejercicio ha sido guardado
+            if (isSaved) {
+                Icon(
+                    imageVector = Icons.Default.CheckBox,
+                    contentDescription = null,
+                    tint = Color(0xFF388E3C)
+                )
+            }
         }
     }
 
@@ -296,7 +301,10 @@ fun ItemEjercicio(
                         Button(onClick = { if (repeticiones > 1) repeticiones-- }) {
                             Text("-")
                         }
-                        Text(text = "Reps: $repeticiones", modifier = Modifier.padding(horizontal = 16.dp))
+                        Text(
+                            text = "Reps: $repeticiones",
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
                         Button(onClick = { repeticiones++ }) {
                             Text("+")
                         }
@@ -308,7 +316,10 @@ fun ItemEjercicio(
                         Button(onClick = { if (series > 1) series-- }) {
                             Text("-")
                         }
-                        Text(text = "Series: $series", modifier = Modifier.padding(horizontal = 16.dp))
+                        Text(
+                            text = "Series: $series",
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
                         Button(onClick = { series++ }) {
                             Text("+")
                         }
@@ -325,7 +336,8 @@ fun ItemEjercicio(
                         }
                         Button(onClick = {
                             onSetRepeticionesYSeries(ejercicio, repeticiones, series)
-                            onSaveRepsAndSeries(ejercicio.ejercicioId, repeticiones, series)
+                            onSaveRepsAndSeries(ejercicio.ejercicioId!!, repeticiones, series)
+                            isSaved = true
                             showModal = false
                         }) {
                             Text("Guardar")
