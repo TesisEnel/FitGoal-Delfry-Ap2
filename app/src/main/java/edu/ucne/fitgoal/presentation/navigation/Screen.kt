@@ -35,15 +35,15 @@ sealed class Screen {
 
     @Serializable
     data object AuthNavHostScreen: Screen()
+}
+@Serializable
+data object CrearRutinaScreen: Screen()
 
-    @Serializable
-    data object CrearRutinaScreen: Screen()
+@Serializable
+data object CalendarioScreen: Screen()
+@Serializable
+data object AguaDiariaScreen: Screen()
 
-    @Serializable
-    data object CalendarioScreen: Screen()
-    data object AguaDiariaScreen: Screen()
-
-    @Serializable
-    data object EjerciciosScreen: Screen()
-
+@Serializable
+data object EjerciciosScreen: Screen()
 }
