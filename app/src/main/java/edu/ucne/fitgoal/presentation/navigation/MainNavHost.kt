@@ -76,15 +76,6 @@ fun MainNavHost(
 
             composable<Screen.CrearRutinaScreen> {
                 CrearRutinaScreen(
-                    goToPerfil = {
-                        navHostController.navigate(Screen.PerfilScreen)
-                    },
-                    goToReloj = {
-                        navHostController.navigate(Screen.RelojScreen)
-                    },
-                    goToCalculadora = {
-                        navHostController.navigate(Screen.CalculadoraScreen)
-                    },
                     goToPlantilla = {
                         navHostController.navigate(Screen.PlantillaScreen)
                     }

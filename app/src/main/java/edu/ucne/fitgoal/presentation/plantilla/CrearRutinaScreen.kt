@@ -29,9 +29,6 @@ import edu.ucne.fitgoal.presentation.ejercicio.EjercicioViewModel
 fun CrearRutinaScreen(
     viewModel: EjercicioViewModel = hiltViewModel(),
     plantillaViewModel: PlantillaViewModel = hiltViewModel(),
-    goToPerfil: () -> Unit,
-    goToReloj: () -> Unit,
-    goToCalculadora: () -> Unit,
     goToPlantilla: () -> Unit
 ) {
     val estado by viewModel.estado.collectAsState()
