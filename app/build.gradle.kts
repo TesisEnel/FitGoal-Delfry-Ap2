@@ -107,6 +107,11 @@ dependencies {
     implementation(libs.converter.moshi)
     implementation(libs.logging.interceptor)
 
+    //Calendario :D
+    implementation(libs.material.calendar.view)
+    implementation (libs.gson.v288)
+
+    implementation(libs.coil.compose.v200)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.google.truth)
