@@ -13,11 +13,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
@@ -44,8 +45,6 @@ import coil3.compose.AsyncImage
 import edu.ucne.fitgoal.presentation.components.LoadingIndicator
 import edu.ucne.fitgoal.presentation.components.ModalError
 import edu.ucne.fitgoal.presentation.navigation.Screen
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 
 @Composable
 fun PerfilScreen(
@@ -93,7 +92,7 @@ fun PerfilScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     Text(
                         text = uiState.value.nombre.ifEmpty { "Nombre no disponible" },
@@ -114,7 +113,7 @@ fun PerfilScreen(
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(250.dp)
+                            .height(150.dp)
                             .padding(horizontal = 16.dp),
                         shape = RoundedCornerShape(16.dp),
                         elevation = CardDefaults.elevatedCardElevation()
@@ -136,22 +135,7 @@ fun PerfilScreen(
                                 fontSize = 20.sp
                             )
                             Text(
-                                "Peso Inicial: ${uiState.value.pesoInicial} lb",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 20.sp
-                            )
-                            Text(
                                 "Peso Actual: ${uiState.value.pesoActual} lb",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 20.sp
-                            )
-                            Text(
-                                "Peso Ideal: ${uiState.value.pesoIdeal} lb",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 20.sp
-                            )
-                            Text(
-                                "Agua Diaria: ${uiState.value.aguaDiaria} L",
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontSize = 20.sp
                             )
@@ -164,13 +148,10 @@ fun PerfilScreen(
                 items(
                     listOf(
                         Triple("Editar Perfil", Icons.Default.Edit) {
-                            perfilViewModel.onEvent(PerfilEvent.NavigateToEditarPerfil)
+                            perfilViewModel.onEvent(PerfilEvent.NavigateToEditarPerfil, navController)
                         },
                         Triple("Progreso diario", Icons.Default.CalendarToday) {
-                            perfilViewModel.onEvent(PerfilEvent.NavigateToCalculadora)
-                        },
-                        Triple("Ayuda", Icons.AutoMirrored.Filled.Help) {
-                            perfilViewModel.onEvent(PerfilEvent.NavigateToAyuda)
+                            perfilViewModel.onEvent(PerfilEvent.NavigateToProgresoDiario, navController)
                         }
                     )
                 ) { (text, icon, onClick) ->
@@ -186,7 +167,7 @@ fun PerfilScreen(
                 item {
                     OutlinedButton(
                         onClick = {
-                            perfilViewModel.onEvent(PerfilEvent.Logout)
+                            perfilViewModel.onEvent(PerfilEvent.Logout, navController)
                             navController.navigate(Screen.AuthNavHostScreen)
                         },
                         modifier = Modifier
@@ -223,7 +204,7 @@ fun PerfilScreen(
         if (uiState.value.isModalErrorVisible) {
             ModalError(
                 error = uiState.value.error,
-                onclick = { perfilViewModel.onEvent(PerfilEvent.CloseErrorModal) }
+                onclick = { perfilViewModel.onEvent(PerfilEvent.CloseErrorModal, navController) }
             )
         }
     }
