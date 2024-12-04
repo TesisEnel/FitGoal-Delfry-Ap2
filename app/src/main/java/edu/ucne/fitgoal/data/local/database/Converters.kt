@@ -3,9 +3,8 @@ package edu.ucne.fitgoal.data.local.database
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import edu.ucne.fitgoal.data.local.entities.EjerciciosEntity
-import edu.ucne.fitgoal.data.remote.dto.EjerciciosDto
-import java.util.Date
+import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
+
 
 class Converters {
     @TypeConverter
@@ -20,16 +19,16 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromEjerciciosList(value: List<EjerciciosEntity>): String {
+    fun fromEjerciciosList(value: List<EjercicioEntity>): String {
         val gson = Gson()
-        val type = object : TypeToken<List<EjerciciosEntity>>() {}.type
+        val type = object : TypeToken<List<EjercicioEntity>>() {}.type
         return gson.toJson(value, type)
     }
 
     @TypeConverter
-    fun toEjerciciosList(value: String): List<EjerciciosEntity> {
+    fun toEjerciciosList(value: String): List<EjercicioEntity> {
         val gson = Gson()
-        val type = object : TypeToken<List<EjerciciosEntity>>() {}.type
+        val type = object : TypeToken<List<EjercicioEntity>>() {}.type
         return gson.fromJson(value, type)
     }
 }

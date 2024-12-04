@@ -73,6 +73,7 @@ android {
 }
 
 dependencies {
+    // Core y fundamentales
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -82,70 +83,68 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
-
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.material)
 
-    //navegacion
+
+    // Navegación
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlin.serialization.json)
 
-    //room
+    // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.runtime.livedata)
     annotationProcessor(libs.androidx.room.room.compiler)
     ksp(libs.androidx.room.room.compiler)
-    //  optional - Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
 
-    //Hilt
+    // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    //retrofit
+    // Retrofit y Moshi
     implementation(libs.retrofit)
     implementation(libs.moshi.kotlin)
     implementation(libs.converter.moshi)
     implementation(libs.logging.interceptor)
 
-    //Calendario :D
-    implementation(libs.material.calendar.view)
-    implementation (libs.gson.v288)
+    // Calendario
+    implementation(libs.applandeo.material.calendar.view)
 
-    implementation(libs.coil.compose.v200)
+    // Gson
+    implementation(libs.gson)
+
+    // Coil (para carga de imágenes)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.coil.gif)
+
+    // Test (unitarios y de UI)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.google.truth)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     testImplementation(libs.robolectric)
-    testImplementation(libs.google.truth)
-    testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation (libs.ui)
-    implementation (libs.androidx.material)
-    implementation (libs.androidx.navigation.compose.v240alpha01)
-
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.googleid)
-
+    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.ktx)
 
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
-    implementation(libs.coil.gif)
-
-    implementation (libs.datetime)
-    coreLibraryDesugaring (libs.desugar.jdk.libs)
-
-    implementation (libs.androidx.work.runtime.ktx)
+    // Otros
+    implementation(libs.datetime)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 }
