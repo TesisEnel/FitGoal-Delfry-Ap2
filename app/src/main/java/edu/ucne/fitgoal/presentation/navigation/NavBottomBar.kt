@@ -35,18 +35,18 @@ fun NavBottomBar(
         backgroundColor = DarkGreen,
     ) {
         BottomNavItem(
-            title = stringResource(R.string.drawer_planificador),
-            isSelected = selectedItem.value == stringResource(R.string.drawer_planificador),
+            title = stringResource(R.string.drawer_calendario),
+            isSelected = selectedItem.value == stringResource(R.string.drawer_calendario),
             id = R.drawable.calendar
         ) {
-            handleItemClick(Screen.PlanificadorScreen, it)
+            handleItemClick(Screen.CalendarioScreen, it)
         }
         BottomNavItem(
-            title = stringResource(R.string.drawer_perfil),
-            isSelected = selectedItem.value == stringResource(R.string.drawer_perfil),
-            id = R.drawable.water
+            title = stringResource(R.string.drawer_planificador),
+            isSelected = selectedItem.value == stringResource(R.string.drawer_planificador),
+            id = R.drawable.list
         ) {
-            handleItemClick(Screen.PerfilScreen, it)
+            handleItemClick(Screen.PlanificadorScreen, it)
         }
         BottomNavItem(
             title = stringResource(R.string.drawer_home),
