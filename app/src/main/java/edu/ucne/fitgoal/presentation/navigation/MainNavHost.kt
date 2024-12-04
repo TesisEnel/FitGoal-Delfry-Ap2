@@ -13,10 +13,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 import edu.ucne.fitgoal.MainActivity
 import edu.ucne.fitgoal.presentation.aguadiaria.HorarioScreen
 import edu.ucne.fitgoal.presentation.auth.DatosUsuarioScreen
 import edu.ucne.fitgoal.presentation.calculadora.CalculadoraScreen
+import edu.ucne.fitgoal.presentation.editarPerfil.EditarPerfilScreen
 import edu.ucne.fitgoal.presentation.ejercicio.EjercicioScreen
 import edu.ucne.fitgoal.presentation.home.HomeScreen
 import edu.ucne.fitgoal.presentation.home.ProgresoListScreen
@@ -29,6 +31,7 @@ fun MainNavHost(
     navHostController: NavHostController = rememberNavController()
 ) {
     val selectedItem = remember { mutableStateOf("Home") }
+    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
     BoxBottomNav(
         navHostController = navHostController,
@@ -82,6 +85,19 @@ fun MainNavHost(
                     }
                 )
             }
+
+            composable<Screen.EditarPerfilScreen> {
+                EditarPerfilScreen(
+                    userId = currentUserId,
+                    onSaveSuccess = {
+                        navHostController.navigate(Screen.PerfilScreen)
+                    },
+                    onBackToProfile = {
+                        navHostController.navigate(Screen.PerfilScreen)
+                    }
+                )
+            }
+
             composable<Screen.HomeScreen> {
                 HomeScreen(
                     goPerfil = {
