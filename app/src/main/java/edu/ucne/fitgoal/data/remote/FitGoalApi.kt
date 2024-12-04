@@ -1,13 +1,18 @@
 package edu.ucne.fitgoal.data.remote
 
+import edu.ucne.fitgoal.data.remote.dto.EjercicioDto
+import edu.ucne.fitgoal.data.remote.dto.HorarioBebidaDto
 import edu.ucne.fitgoal.data.remote.dto.CalendarioDto
 import edu.ucne.fitgoal.data.remote.dto.EjerciciosDto
 import edu.ucne.fitgoal.data.remote.dto.PerfilDto
 import edu.ucne.fitgoal.data.remote.dto.PlantillaDto
 import edu.ucne.fitgoal.data.remote.dto.RelojDto
+import edu.ucne.fitgoal.data.remote.dto.TipDto
 import edu.ucne.fitgoal.data.remote.dto.UsuarioDto
 import edu.ucne.fitgoal.util.Constants.API_KEY
+import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -45,9 +50,36 @@ interface FitGoalApi {
 
     @Headers("X-API-Key:${API_KEY}")
     @GET("api/Ejercicios")
+    
     suspend fun getEjercicios(): List<EjerciciosDto>
 
     @Headers("X-API-Key:${API_KEY}")
     @GET("api/Plantilla/{id}")
     suspend fun getPlantillas(@Path("id") id: Int): PlantillaDto
+
+    suspend fun getEjercicios(): List<EjercicioDto>
+
+    @Headers("X-API-Key:${API_KEY}")
+    @GET("api/HorarioBebidas/List/{id}")
+    suspend fun getHorarioBebidas(@Path("id") id: String): List<HorarioBebidaDto>
+
+    @Headers("X-API-Key:${API_KEY}")
+    @GET("api/HorarioBebidas/{id}")
+    suspend fun getHorarioBebida(@Path("id") id: Int): HorarioBebidaDto
+
+    @Headers("X-API-Key:${API_KEY}")
+    @PUT("api/HorarioBebidas/{id}")
+    suspend fun putHorarioBebida(@Path("id") id: Int, @Body horarioBebidaDto: HorarioBebidaDto): Response<Unit>
+
+    @Headers("X-API-Key:${API_KEY}")
+    @DELETE("api/HorarioBebidas/{id}")
+    suspend fun deleteHorarioBebida(@Path("id") id: Int): Response<Unit>
+
+    @Headers("X-API-Key:${API_KEY}")
+    @POST("api/HorarioBebidas")
+    suspend fun postHorarioBebida(@Body horarioBebidaDto: HorarioBebidaDto): HorarioBebidaDto
+
+    @Headers("X-API-Key:${API_KEY}")
+    @GET("api/Tips")
+    suspend fun getTips(): List<TipDto>
 }

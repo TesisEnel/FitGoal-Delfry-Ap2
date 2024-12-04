@@ -158,11 +158,6 @@ fun LoginScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        GoogleLoginButton(!uiState.isLoading) {
-                            activity?.let { onEvent(AuthEvent.SignInWithGoogle(it, goHome)) }
-                        }
-
-                        Spacer(modifier = Modifier.height(8.dp))
                         Button(
                             onClick = {
                                 onEvent(AuthEvent.SignIn)
@@ -181,6 +176,11 @@ fun LoginScreen(
                                 fontWeight = FontWeight.Bold
                             )
                         }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        GoogleLoginButton(!uiState.isLoading) {
+                            activity?.let { onEvent(AuthEvent.SignInWithGoogle(it, goHome)) }
+                        }
+
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(
                             onClick = { goRegistro() },

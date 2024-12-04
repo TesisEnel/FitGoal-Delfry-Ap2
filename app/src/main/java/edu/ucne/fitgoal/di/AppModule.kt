@@ -35,5 +35,13 @@ object AppModule {
     fun provideEjerciciosDao(fitGoalDb: FitGoalDb) = fitGoalDb.ejerciciosDao()
     @Provides
     fun provideEjerciciosPlantillasDao(fitGoalDb: FitGoalDb) = fitGoalDb.ejerciciosPlantillasDao()
-
+    
+    fun provideEjercicioDao(fitGoalDb: FitGoalDb) = fitGoalDb.ejercicioDao()
+    @Provides
+    fun provideHorarioBebidaDao(fitGoalDb: FitGoalDb) = fitGoalDb.horarioBebidaDao()
+    @Provides
+    fun provideTipDao(fitGoalDb: FitGoalDb) = fitGoalDb.tipDao()
+    @Provides
+    @Singleton
+    fun provideApplicationContext(@ApplicationContext context: Context): Context = context
 }
