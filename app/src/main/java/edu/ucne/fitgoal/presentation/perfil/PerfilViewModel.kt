@@ -97,7 +97,6 @@ class PerfilViewModel @Inject constructor(
         when (event) {
             is PerfilEvent.GetPerfil -> fetchUserData()
             is PerfilEvent.NavigateToEditarPerfil -> navigateToEditarPerfil(navController)
-            is PerfilEvent.NavigateToProgresoSemanal -> {}
             is PerfilEvent.Logout -> logout()
             is PerfilEvent.CloseErrorModal -> closeErrorModal()
         }
