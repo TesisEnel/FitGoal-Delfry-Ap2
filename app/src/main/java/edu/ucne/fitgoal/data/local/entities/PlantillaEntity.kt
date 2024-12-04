@@ -15,6 +15,6 @@ data class PlantillaEntity(
     @ColumnInfo(name = "descripcion")
     val descripcion: String,
 
-    val ejercicios: List<EjerciciosEntity>,
+    val ejercicios: List<EjercicioEntity>,
     val duracionTotal: String = ""
 )

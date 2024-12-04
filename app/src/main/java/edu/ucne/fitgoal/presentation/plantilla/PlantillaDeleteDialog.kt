@@ -19,8 +19,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import coil.compose.rememberAsyncImagePainter
-import edu.ucne.fitgoal.data.local.entities.EjerciciosEntity
+import coil3.compose.rememberAsyncImagePainter
+import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
 import edu.ucne.fitgoal.data.remote.dto.PlantillaDto
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -76,7 +76,7 @@ fun PlantillaDeleteDialog(
 
 @Composable
 fun EjercicioItem(
-    ejercicio: EjerciciosEntity,
+    ejercicio: EjercicioEntity,
     plantilla: PlantillaDto?,
     onDeleteConfirm: () -> Unit,
     viewModel: PlantillaViewModel
@@ -141,12 +141,14 @@ fun EjercicioItem(
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    Text(
-                        text = ejercicio.descripcion,
-                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
+                    ejercicio.descripcion?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        )
+                    }
                     TextButton(onClick = { showDialog = false }) {
                         Text("Cerrar")
                     }
@@ -173,10 +175,12 @@ fun EjercicioItem(
             contentScale = ContentScale.Crop
         )
 
-        Text(
-            text = ejercicio.nombreEjercicio,
-            style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
-        )
+        ejercicio.nombreEjercicio?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
+            )
+        }
 
         Spacer(modifier = Modifier.weight(1f))
 

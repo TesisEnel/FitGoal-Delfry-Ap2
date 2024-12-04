@@ -1,7 +1,8 @@
 package edu.ucne.fitgoal.data.remote.dto
 
 import androidx.room.PrimaryKey
-import edu.ucne.fitgoal.data.local.entities.EjerciciosEntity
+import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
+
 
 data class PlantillaDto(
     @PrimaryKey(autoGenerate = true)
@@ -10,7 +11,7 @@ data class PlantillaDto(
     val estado: String = "Active",
     val nombrePlantilla: String = "",
     val descripcionPlantilla: String = "",
-    val ejercicios: List<EjerciciosEntity>,
+    val ejercicios: List<EjercicioEntity>,
     val duracionTotal: Int = 0,
     val ejercicioId: Int = 0
 )

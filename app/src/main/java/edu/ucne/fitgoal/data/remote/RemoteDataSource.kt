@@ -9,15 +9,15 @@ class RemoteDataSource @Inject constructor(
     private val fitGoalApi: FitGoalApi
 ) {
     suspend fun getPerfil() = fitGoalApi.getPerfil()
-    suspend fun getReloj() = fitGoalApi.getReloj()
-    suspend fun getPlantillas() = fitGoalApi.getPlantillas()
-    suspend fun getCalendario() = fitGoalApi.getCalendario()
 
     suspend fun postUsuario(usuarioDto: UsuarioDto) = fitGoalApi.postUsuario(usuarioDto)
     suspend fun putUsuario(id: String, usuarioDto: UsuarioDto) = fitGoalApi.putUsuario(id, usuarioDto)
     suspend fun getUsuario(id: String) = fitGoalApi.getUsuario(id)
+    suspend fun getPlantillas() = fitGoalApi.getPlantillas()
 
+    suspend fun getCalendario() = fitGoalApi.getCalendario()
     suspend fun getEjercicios() = fitGoalApi.getEjercicios()
+
 
     suspend fun getHorarioBebidas(id: String) = fitGoalApi.getHorarioBebidas(id)
     suspend fun getHorarioBebida(id: Int) = fitGoalApi.getHorarioBebida(id)
@@ -26,5 +26,4 @@ class RemoteDataSource @Inject constructor(
     suspend fun postHorarioBebida(horarioBebidaDto: HorarioBebidaDto) = fitGoalApi.postHorarioBebida(horarioBebidaDto)
 
     suspend fun getTips(): List<TipDto> = fitGoalApi.getTips()
-
 }

@@ -6,10 +6,10 @@ import androidx.room.Insert
 import androidx.room.Junction
 import androidx.room.Query
 import androidx.room.Relation
-import edu.ucne.fitgoal.data.local.entities.EjerciciosEntity
 import edu.ucne.fitgoal.data.local.entities.PlantillaEntity
 import androidx.room.Transaction
 import androidx.room.Update
+import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
 import edu.ucne.fitgoal.data.local.entities.EjerciciosPlantillasEntity
 import edu.ucne.fitgoal.data.remote.dto.EjerciciosDto
 
@@ -22,7 +22,7 @@ interface PlantillaDao {
     @Query("DELETE FROM Plantilla WHERE plantillaId = :plantillaId")
     suspend fun deletePlantillaById(plantillaId: Int)
 
-    @Query("DELETE FROM Ejercicio WHERE plantillaId = :plantillaId")
+    @Query("DELETE FROM ejercicios_plantillas WHERE plantillaId = :plantillaId")
     suspend fun deleteEjerciciosByPlantillaId(plantillaId: Int)
 
 
@@ -36,7 +36,7 @@ interface PlantillaDao {
     suspend fun insertPlantilla(plantilla: PlantillaEntity): Long
 
     @Insert
-    suspend fun insertEjercicios(ejercicios: List<EjerciciosEntity>)
+    suspend fun insertEjercicios(ejercicios: List<EjercicioEntity>)
 
     @Insert
     suspend fun insertEjerciciosPlantillas(relaciones: List<EjerciciosPlantillasEntity>)
@@ -44,7 +44,7 @@ interface PlantillaDao {
 
     @Transaction
     @Query("SELECT * FROM Plantilla WHERE plantillaId = :plantillaId")
-    suspend fun getEjerciciosByPlantillaId(plantillaId: Int): List<EjerciciosEntity> {
+    suspend fun getEjerciciosByPlantillaId(plantillaId: Int): List<EjercicioEntity> {
         val plantillaWithEjercicios = getPlantillaWithEjercicios(plantillaId)
         return plantillaWithEjercicios.ejercicios
     }
@@ -61,7 +61,7 @@ interface PlantillaDao {
             )
         }
         val ejerciciosEntities = ejercicios.map {
-            EjerciciosEntity(
+            EjercicioEntity(
                 ejercicioId = it.ejercicioId,
                 nombreEjercicio = it.nombreEjercicio,
                 foto = it.foto,
@@ -70,7 +70,7 @@ interface PlantillaDao {
                 plantillaId = plantillaId,
                 descripcion = it.descripcion,
                 grupoMuscular = it.grupoMuscular,
-                duracionEjercicio = it.duracionEjercicio
+                duracionEjercicio = it.duracionEjercicio.toString()
             )
         }
         insertEjercicios(ejerciciosEntities)
@@ -89,5 +89,5 @@ data class PlantillaWithEjercicios(
         entityColumn = "ejercicioId",
         associateBy = Junction(EjerciciosPlantillasEntity::class)
     )
-    val ejercicios: List<EjerciciosEntity>
+    val ejercicios: List<EjercicioEntity>
 )

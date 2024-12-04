@@ -272,10 +272,12 @@ fun PlantillaItem(
 
                 Column {
                     plantilla.ejercicios.forEach { ejercicio ->
-                        Text(
-                            text = ejercicio.nombreEjercicio,
-                            style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF2E7D32))
-                        )
+                        ejercicio.nombreEjercicio?.let {
+                            Text(
+                                text = it,
+                                style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF2E7D32))
+                            )
+                        }
                     }
                 }
             }

@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.fitgoal.data.local.dao.PlantillaDao
-import edu.ucne.fitgoal.data.local.entities.EjerciciosEntity
+import edu.ucne.fitgoal.data.local.entities.EjercicioEntity
+
 import edu.ucne.fitgoal.data.local.entities.EjerciciosPlantillasEntity
 import edu.ucne.fitgoal.data.local.entities.PlantillaEntity
 import edu.ucne.fitgoal.data.remote.Resource
@@ -76,7 +77,7 @@ class PlantillaViewModel @Inject constructor(
     fun crearPlantilla(
         nombre: String,
         descripcion: String,
-        ejercicios: List<EjerciciosEntity>,
+        ejercicios: List<EjercicioEntity>,
         duracionTotal: String
     ) {
         viewModelScope.launch {
@@ -142,7 +143,7 @@ class PlantillaViewModel @Inject constructor(
     }
 }
 
-fun PlantillaEntity.toDto(ejercicios: List<EjerciciosEntity>): PlantillaDto {
+fun PlantillaEntity.toDto(ejercicios: List<EjercicioEntity>): PlantillaDto {
     return PlantillaDto(
         plantillaId = plantillaId,
         nombrePlantilla = nombre,
@@ -151,8 +152,8 @@ fun PlantillaEntity.toDto(ejercicios: List<EjerciciosEntity>): PlantillaDto {
     )
 }
 
-fun EjerciciosDto.toEntity(): EjerciciosEntity {
-    return EjerciciosEntity(
+fun EjerciciosDto.toEntity(): EjercicioEntity {
+    return EjercicioEntity(
         ejercicioId = this.ejercicioId,
         nombreEjercicio = this.nombreEjercicio,
         descripcion = this.descripcion,
@@ -161,7 +162,7 @@ fun EjerciciosDto.toEntity(): EjerciciosEntity {
         plantillaId = this.plantillaId,
         repeticiones = this.repeticiones,
         series = this.series,
-        duracionEjercicio = this.duracionEjercicio
+        duracionEjercicio = this.duracionEjercicio.toString()
 
     )
 }
