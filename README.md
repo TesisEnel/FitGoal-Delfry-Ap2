@@ -90,6 +90,7 @@
 <div align="center">
 
 ### Pantallas de Inicio de Sesión y Registro
+<div align="center">
 <table>
   <tr>
     <td align="center">
@@ -99,19 +100,17 @@
     </td>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/2.registro_usuario.png" width="200"><br>
-      <b>Pantalla de Registro de Usuario</b><br>
+      <b>Pantalla de Registro</b><br>
       Los usuarios nuevos pueden registrarse proporcionando su nombre, apellidos, correo y contraseña.
     </td>
   </tr>
 </table>
-
 </div>
 
 ---
 
+### Inicio de Sesión con Google
 <div align="center">
-
-### Inicio de Sesión con Google y Formulario Inicial
 <table>
   <tr>
     <td align="center">
@@ -121,94 +120,148 @@
     </td>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/0.formulario_inicial.png" width="200"><br>
-      <b>Formulario Inicial</b><br>
-      Registro de información inicial como peso, altura y metas.
+      <b>Registro Inicial</b><br>
+      Registro de datos para nuevos usuarios.
     </td>
   </tr>
 </table>
-
 </div>
 
 ---
 
+### Pantalla Home y Nueva Meta
 <div align="center">
-
-### Home y Gestión de Perfil
 <table>
   <tr>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/4.home.png" width="200"><br>
       <b>Pantalla Home</b><br>
-      Resumen de metas, progreso y consejos útiles.
+      Consulta estadísticas y metas de manera general.
     </td>
     <td align="center">
-      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/10.perfil.png" width="200"><br>
-      <b>Perfil de Usuario</b><br>
-      Información del perfil con opciones para editar o cerrar sesión.
-    </td>
-    <td align="center">
-      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/11.editar_perfil.png" width="200"><br>
-      <b>Editar Perfil</b><br>
-      Edición de datos como edad y altura.
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/12.nueva_meta.png" width="200"><br>
+      <b>Nueva Meta</b><br>
+      Crea metas personalizadas y sigue tu progreso.
     </td>
   </tr>
 </table>
-
 </div>
 
 ---
 
+### Perfil y edición
 <div align="center">
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/10.perfil.png" width="200"><br>
+      <b>Pantalla perfil</b><br>
+      Muestra información del usuario.
+    </td>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/11.editar_perfil.png" width="200"><br>
+      <b>Nueva Meta</b><br>
+      Modifica edad y altura del usuario.
+    </td>
+  </tr>
+</table>
+</div>
+
+---
 
 ### Gestión de Ejercicios
+<div align="center">
 <table>
   <tr>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/5.ejercicios.png" width="200"><br>
-      <b>Gestión de Ejercicios</b><br>
-      Accede a una lista de ejercicios con ilustraciones y descripciones.
+      <b>Lista de Ejercicios</b><br>
+      Visualiza ejercicios disponibles y selecciona los más adecuados.
     </td>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/6.descripcion_ejercicio.png" width="200"><br>
-      <b>Descripción de un Ejercicio</b><br>
-      Cada ejercicio incluye una guía detallada para realizarlo correctamente.
+      <b>Descripción de Ejercicios</b><br>
+      Detalles paso a paso para realizar cada ejercicio correctamente.
     </td>
   </tr>
 </table>
-
 </div>
 
 ---
 
-<div align="center">
-
 ### Gestión de Hidratación
+<div align="center">
 <table>
   <tr>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/7.registro_agua.png" width="200"><br>
       <b>Registro de Hidratación</b><br>
-      Registra la cantidad de agua consumida y establece recordatorios.
+      Lleva un control diario del agua consumida.
     </td>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/8.agua_diaria.png" width="200"><br>
-      <b>Resumen de Consumo Diario</b><br>
-      Visualiza tus metas diarias de hidratación y ajusta según tus necesidades.
+      <b>Consumo Diario</b><br>
+      Visualiza y ajusta tus metas de hidratación diaria.
     </td>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/9.agua_notificacion.png" width="200"><br>
       <b>Notificación de Hidratación</b><br>
-      Recibe notificaciones oportunas para mantenerte hidratado durante el día.
+      Recibe recordatorios para mantenerte hidratado.
     </td>
   </tr>
 </table>
-
 </div>
+
+---
+
+### Rutinas y Ejercicios
+<div align="center">
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/13.creacion_rutina.png" width="200"><br>
+      <b>Creación de Rutinas</b><br>
+      Diseña tus propias rutinas personalizadas.
+    </td>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/14.configurar_ejercicio.png" width="200"><br>
+      <b>Configurar Ejercicios</b><br>
+      Ajusta series y repeticiones para cada actividad.
+    </td>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/15.partes_cuerpo.png" width="200"><br>
+      <b>Partes del cuerpo</b><br>
+      Lista partes del cuerpo a las que se enfoca el ejercicio.
+    </td>
+  </tr>
+</table>
+</div>
+
+---
+
+### Cronómetro y Calendario
+<div align="center">
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/17.cronometro_plantilla.png" width="200"><br>
+      <b>Cronómetro</b><br>
+      Temporiza tus rutinas y monitorea la duración.
+    </td>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/18.calendario.png" width="200"><br>
+      <b>Calendario</b><br>
+      Programa tus actividades diarias y planifica tu progreso.
+    </td>
+  </tr>
+</table>
+</div>
+
+---
 
 <div align="center">
 
 ## ⚙️ **Desarrollado con Amor por:**
-
 <p align="center" style="font-size: 1.5em;">
   <b>Delfry Paulino</b> 💻 <br>
   <b>Yudelka Guillen</b> 🎨 <br>
