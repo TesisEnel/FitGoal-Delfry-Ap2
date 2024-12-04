@@ -113,7 +113,7 @@ fun PerfilScreen(
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(150.dp)
+                            .height(200.dp)
                             .padding(horizontal = 16.dp),
                         shape = RoundedCornerShape(16.dp),
                         elevation = CardDefaults.elevatedCardElevation()
@@ -135,7 +135,17 @@ fun PerfilScreen(
                                 fontSize = 20.sp
                             )
                             Text(
-                                "Peso Actual: ${uiState.value.pesoActual} lb",
+                                "Peso inicial: ${uiState.value.pesoInicial} lb",
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontSize = 20.sp
+                            )
+                            Text(
+                                "Peso actual: ${uiState.value.pesoActual} lb",
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontSize = 20.sp
+                            )
+                            Text(
+                                "Peso ideal: ${uiState.value.pesoIdeal} lb",
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontSize = 20.sp
                             )
