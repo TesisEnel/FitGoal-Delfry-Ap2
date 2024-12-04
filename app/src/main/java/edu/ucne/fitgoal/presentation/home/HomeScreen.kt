@@ -77,8 +77,9 @@ import kotlin.reflect.KFunction1
 
 @Composable
 fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
     goPerfil: () -> Unit = {},
-    viewModel: HomeViewModel = hiltViewModel()
+    goProgresos: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val currentUser = FirebaseAuth.getInstance().currentUser
@@ -114,7 +115,7 @@ fun HomeScreen(
                             .fillMaxWidth()
                             .padding(vertical = 16.dp)
                             .clickable {
-
+                                goProgresos()
                             },
                         shape = MaterialTheme.shapes.medium,
                         elevation = CardDefaults.elevatedCardElevation()

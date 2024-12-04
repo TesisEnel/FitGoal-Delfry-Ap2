@@ -32,11 +32,13 @@ fun TextFielComponent(
     imeAction: ImeAction = ImeAction.Next,
     error: Boolean = false,
     errorMessage: String = "",
+    readOnly: Boolean = false,
     onValueChange: (String) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
 
     TextField(
+        readOnly = readOnly,
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType,

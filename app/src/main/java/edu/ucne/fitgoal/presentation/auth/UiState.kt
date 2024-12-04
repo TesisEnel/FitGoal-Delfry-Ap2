@@ -10,6 +10,16 @@ data class UiState(
     val apellidoError: String = "",
     val email: String = "",
     val emailError: String = "",
+    val edad: Int = 0,
+    val edadError: String = "",
+    val altura: Float = 0f,
+    val alturaError: String = "",
+    val pesoInicial: Float = 0f,
+    val pesoInicialError: String = "",
+    val pesoActual: Float = 0f,
+    val pesoIdeal: Float = 0f,
+    val pesoIdealError: String = "",
+    val pesoActualError: String = "",
     val password: String = "",
     val verifyPassword: String = "",
     val passwordError: String = "",
@@ -19,9 +29,12 @@ data class UiState(
     val canSeePassword: Boolean = false,
     val keyboardType: KeyboardType = KeyboardType.Password,
     val isAuthorized: Boolean = false,
+    val isDatosLLenos: Boolean = false,
     var isEmailVerified: Boolean = false,
     val isButtonEnabled: Boolean = true,
     val tiempo: Int = 0,
+    val update: Boolean = false,
+    val esNuevo: Boolean = false,
     val isModalErrorVisible: Boolean = false,
 )
 
@@ -30,4 +43,16 @@ fun UiState.toDto() = UsuarioDto(
     nombre = nombre,
     apellido = apellido,
     correo = email
+)
+
+fun UiState.toUsuarioDto() = UsuarioDto(
+    usuarioId = "",
+    nombre = nombre,
+    apellido = apellido,
+    correo = email,
+    edad = edad,
+    altura = altura,
+    pesoInicial = pesoInicial,
+    pesoActual = pesoActual,
+    pesoIdeal = pesoIdeal
 )
