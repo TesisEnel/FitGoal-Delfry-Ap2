@@ -8,7 +8,6 @@ import edu.ucne.fitgoal.data.remote.dto.ProgresoUsuarioDto
 import edu.ucne.fitgoal.data.remote.dto.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.last
 import retrofit2.HttpException
 import javax.inject.Inject
 

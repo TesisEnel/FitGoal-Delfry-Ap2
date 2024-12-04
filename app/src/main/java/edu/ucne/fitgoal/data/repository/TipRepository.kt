@@ -28,9 +28,9 @@ class TipRepository @Inject constructor(
             emit(Resource.Error("Error ${e.message}"))
         }
         val tips = tipDao.getAllTips()
-        tips.collect{ tips ->
-            if (tips.isNotEmpty()) {
-                emit(Resource.Success(tips))
+        tips.collect{
+            if (it.isNotEmpty()) {
+                emit(Resource.Success(it))
             } else {
                 emit(Resource.Error("No hay tips"))
             }
