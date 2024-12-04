@@ -29,7 +29,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val progresoUsuarioRepository: ProgresoUsuarioRepository
+    private val progresoUsuarioRepository: ProgresoUsuarioRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 

@@ -43,10 +43,9 @@ class PerfilRepository @Inject constructor(
     fun updateUsuario(id: String, usuarioDto: UsuarioDto): Flow<Resource<UsuarioEntity>> = flow {
         try {
             emit(Resource.Loading())
-            val updatedUsuarioDto = remoteDataSource.putUsuario(id, usuarioDto)
-            val updatedUsuarioEntity = updatedUsuarioDto.toEntity()
-            usuarioDao.save(updatedUsuarioEntity)
-            emit(Resource.Success(updatedUsuarioEntity))
+            remoteDataSource.putUsuario(id, usuarioDto)
+            usuarioDao.save(usuarioDto.toEntity())
+            emit(Resource.Success(usuarioDto.toEntity()))
         } catch (e: HttpException) {
             emit(Resource.Error("Error al actualizar el usuario: ${e.message}"))
         } catch (e: Exception) {
