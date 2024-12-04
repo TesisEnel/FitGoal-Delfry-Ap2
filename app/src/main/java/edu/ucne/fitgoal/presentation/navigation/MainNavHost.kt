@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import edu.ucne.fitgoal.MainActivity
 import edu.ucne.fitgoal.presentation.aguadiaria.HorarioScreen
+import edu.ucne.fitgoal.presentation.calendario.CalendarioScreen
 import edu.ucne.fitgoal.presentation.auth.DatosUsuarioScreen
 import edu.ucne.fitgoal.presentation.calculadora.CalculadoraScreen
 import edu.ucne.fitgoal.presentation.editarPerfil.EditarPerfilScreen
@@ -23,7 +24,8 @@ import edu.ucne.fitgoal.presentation.ejercicio.EjercicioScreen
 import edu.ucne.fitgoal.presentation.home.HomeScreen
 import edu.ucne.fitgoal.presentation.home.ProgresoListScreen
 import edu.ucne.fitgoal.presentation.perfil.PerfilScreen
-import edu.ucne.fitgoal.presentation.planificador.PlanificadorScreen
+import edu.ucne.fitgoal.presentation.plantilla.CrearRutinaScreen
+import edu.ucne.fitgoal.presentation.plantilla.PlantillaScreen
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -41,16 +43,19 @@ fun MainNavHost(
             navController = navHostController,
             startDestination = Screen.HomeScreen,
         ) {
-            composable<Screen.PlanificadorScreen> {
-                PlanificadorScreen(
+            composable<Screen.PlantillaScreen> {
+                PlantillaScreen(
                     goToPerfil = {
                         navHostController.navigate(Screen.PerfilScreen)
                     },
                     goToReloj = {
                         navHostController.navigate(Screen.RelojScreen)
                     },
-                    onDrawer = {
-
+                    goToCrearRutina = {
+                        navHostController.navigate(Screen.CrearRutinaScreen)
+                    },
+                    goToCalculadora = {
+                        navHostController.navigate(Screen.CalculadoraScreen)
                     }
                 )
             }
@@ -69,19 +74,16 @@ fun MainNavHost(
                 EjercicioScreen()
             }
 
-            composable<Screen.CalculadoraScreen> {
-                CalculadoraScreen(
-                    goToPlanificador = {
-                        navHostController.navigate(Screen.PlanificadorScreen)
-                    },
-                    goToPerfil = {
-                        navHostController.navigate(Screen.PerfilScreen)
-                    },
-                    goToReloj = {
-                        navHostController.navigate(Screen.RelojScreen)
-                    },
-                    onDrawer = {
+            composable<Screen.CalendarioScreen>{
+                CalendarioScreen{
+                    navHostController.navigate(Screen.CalendarioScreen)
+                }
+            }
 
+            composable<Screen.CrearRutinaScreen> {
+                CrearRutinaScreen(
+                    goToPlantilla = {
+                        navHostController.navigate(Screen.PlantillaScreen)
                     }
                 )
             }

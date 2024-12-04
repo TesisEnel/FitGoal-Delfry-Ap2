@@ -9,5 +9,8 @@ data class UiState(
     val selectedEjercicio: EjercicioEntity? = null,
     val isModalErrorVisible: Boolean = false,
     val isModalDetailVisible: Boolean = false,
-    val filtro: String = ""
+    val filtro: String = "",
+    val errorMessage: String? = null
 )
+
+

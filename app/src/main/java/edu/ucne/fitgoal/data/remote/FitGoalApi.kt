@@ -1,8 +1,10 @@
 package edu.ucne.fitgoal.data.remote
 
+import edu.ucne.fitgoal.data.remote.dto.CalendarioDto
 import edu.ucne.fitgoal.data.remote.dto.EjercicioDto
 import edu.ucne.fitgoal.data.remote.dto.HorarioBebidaDto
 import edu.ucne.fitgoal.data.remote.dto.PerfilDto
+import edu.ucne.fitgoal.data.remote.dto.PlantillaDto
 import edu.ucne.fitgoal.data.remote.dto.PlanificadorDto
 import edu.ucne.fitgoal.data.remote.dto.ProgresoUsuarioDto
 import edu.ucne.fitgoal.data.remote.dto.RelojDto
@@ -19,17 +21,9 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface FitGoalApi {
-    @Headers("X-API-Key:test")
+    @Headers("X-API-Key:${API_KEY}")
     @GET("api/FitGoal/GetPerfil")
     suspend fun getPerfil(): List<PerfilDto>
-
-    @Headers("X-API-Key:test")
-    @GET("api/FitGoal/GetClientes")
-    suspend fun getReloj(): List<RelojDto>
-
-    @Headers("X-API-Key:test")
-    @GET("api/FitGoal/GetCalendario")
-    suspend fun getPlanificador(): List<PlanificadorDto>
 
     @Headers("X-API-Key:${API_KEY}")
     @POST("api/Usuarios")
@@ -72,6 +66,13 @@ interface FitGoalApi {
     suspend fun getTips(): List<TipDto>
 
     @Headers("X-API-Key:${API_KEY}")
+    @GET("api/GetCalendario")
+    suspend fun getCalendario(): List<CalendarioDto>
+
+    @Headers("X-API-Key:${API_KEY}")
+    @GET("api/GetPlantillas")
+    suspend fun getPlantillas(): List<PlantillaDto>
+  
     @GET("api/ProgresoUsuarios/List/{id}")
     suspend fun getProgresosUsuario(@Path("id") id: String): List<ProgresoUsuarioDto>
 

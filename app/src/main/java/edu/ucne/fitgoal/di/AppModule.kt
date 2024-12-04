@@ -28,7 +28,13 @@ object AppModule {
     @Provides
     fun provideUsuarioDao(fitGoalDb: FitGoalDb) = fitGoalDb.usuarioDao()
     @Provides
-    fun provideEjercicioDao(fitGoalDb: FitGoalDb) = fitGoalDb.ejercicioDao()
+    fun provideCalendarioDao(fitGoalDb: FitGoalDb) = fitGoalDb.calendarioDao()
+    @Provides
+    fun providePlantillaDao(fitGoalDb: FitGoalDb) = fitGoalDb.plantillaDao()
+    @Provides
+    fun provideEjerciciosDao(fitGoalDb: FitGoalDb) = fitGoalDb.ejerciciosDao()
+    @Provides
+    fun provideEjerciciosPlantillasDao(fitGoalDb: FitGoalDb) = fitGoalDb.ejerciciosPlantillasDao()
     @Provides
     fun provideHorarioBebidaDao(fitGoalDb: FitGoalDb) = fitGoalDb.horarioBebidaDao()
     @Provides

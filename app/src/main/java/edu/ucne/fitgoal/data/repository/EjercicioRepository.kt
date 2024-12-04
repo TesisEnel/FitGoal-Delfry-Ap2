@@ -37,4 +37,11 @@ class EjercicioRepository @Inject constructor(
     }
 
     fun getEjerciciosLocales() = ejercicioDao.getAll()
+
+    suspend fun updateEjercicio(ejercicio: EjercicioEntity) {
+        ejercicioDao.updateEjercicio(ejercicio)
+    }
+    suspend fun updateRepsAndSeries(ejercicioId: Int, repeticiones: Int, series: Int): Int {
+        return ejercicioDao.updateRepsAndSeries(ejercicioId, repeticiones, series)
+    }
 }

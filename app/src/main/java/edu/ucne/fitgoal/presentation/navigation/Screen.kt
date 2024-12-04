@@ -3,8 +3,6 @@ package edu.ucne.fitgoal.presentation.navigation
 import kotlinx.serialization.Serializable
 
 sealed class Screen {
-    @Serializable
-    data object PlanificadorScreen : Screen()
 
     @Serializable
     data object PerfilScreen : Screen()
@@ -34,13 +32,22 @@ sealed class Screen {
     data object MainNavHostScreen : Screen()
 
     @Serializable
-    data object AuthNavHostScreen: Screen()
+    data object AuthNavHostScreen : Screen()
 
     @Serializable
-    data object AguaDiariaScreen: Screen()
+    data object CrearRutinaScreen : Screen()
 
     @Serializable
-    data object EjerciciosScreen: Screen()
+    data object CalendarioScreen : Screen()
+
+    @Serializable
+    data object AguaDiariaScreen : Screen()
+
+    @Serializable
+    data object EjerciciosScreen : Screen()
+
+    @Serializable
+    data object PlantillaScreen : Screen()
 
     @Serializable
     data object ProgresoListScreen: Screen()

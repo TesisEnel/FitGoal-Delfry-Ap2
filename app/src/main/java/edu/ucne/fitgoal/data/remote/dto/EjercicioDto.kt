@@ -7,7 +7,11 @@ data class EjercicioDto(
     val nombreEjercicio: String = "",
     val descripcion: String = "",
     val foto: String = "",
-    val grupoMuscular: String = ""
+    val grupoMuscular: String = "",
+    val repeticiones: Int = 0,
+    val series: Int = 0,
+    val duracionEjercicio: String = "",
+    val plantillaId: Int? = null
 )
 
 fun EjercicioDto.toEntity(): EjercicioEntity {
@@ -16,6 +20,20 @@ fun EjercicioDto.toEntity(): EjercicioEntity {
         nombreEjercicio = this.nombreEjercicio,
         descripcion = this.descripcion,
         foto = this.foto,
-        grupoMuscular = this.grupoMuscular
+        grupoMuscular = this.grupoMuscular,
+        repeticiones = this.repeticiones,
+        series = this.series
+    )
+}
+
+fun EjercicioEntity.toDto(): EjercicioDto {
+    return EjercicioDto(
+        ejercicioId = this.ejercicioId,
+        nombreEjercicio = this.nombreEjercicio ?: "",
+        descripcion = this.descripcion ?: "",
+        foto = this.foto ?: "",
+        grupoMuscular = this.grupoMuscular ?: "",
+        repeticiones = this.repeticiones ?: 0,
+        series = this.series ?: 0
     )
 }
