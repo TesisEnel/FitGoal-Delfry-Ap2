@@ -69,7 +69,7 @@ fun NavBottomBar(
         BottomNavItem(
             title = stringResource(R.string.drawer_calendario),
             isSelected = selectedItem.value == stringResource(R.string.drawer_calendario),
-            id = R.drawable.list,
+            id = R.drawable.calendar,
         ) {
             handleItemClick(Screen.CalendarioScreen, it)
         }

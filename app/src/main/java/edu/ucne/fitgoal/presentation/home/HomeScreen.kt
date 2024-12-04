@@ -92,7 +92,9 @@ fun HomeScreen(
             userImageUrl.value = it.photoUrl?.toString() ?: ""
         }
     }
-
+    LaunchedEffect(Unit) {
+        onEvent(HomeEvent.Update)
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -245,7 +247,7 @@ fun HomeScreen(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     ShowComponent(
-                        value = uiState.canPutProgress,
+                        value = true /*uiState.canPutProgress*/,
                         whenContentIsTrue = {
                             Button(
                                 onClick = {
@@ -344,7 +346,7 @@ fun HomeScreen(
     )
 
     ShowComponent(
-        value = uiState.isModalErrorVisible,
+        value = uiState.isModalErrorVisible && uiState.error.isNotEmpty(),
         whenContentIsTrue = {
             ModalError(
                 uiState.error

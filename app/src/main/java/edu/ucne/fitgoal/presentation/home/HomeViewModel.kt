@@ -27,8 +27,6 @@ class HomeViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getProgresoUsuario()
-        getUsuario()
         fetchTips()
     }
 
@@ -43,6 +41,7 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.PesoInicialChanged -> onPesoInicialChange(event.pesoInicial)
             HomeEvent.SaveProgreso -> save()
             HomeEvent.CloseModal -> closeModal()
+            HomeEvent.Update -> update()
         }
     }
 
@@ -130,7 +129,8 @@ class HomeViewModel @Inject constructor(
                     _uiState.value = _uiState.value.copy(
                         tips = resource.data ?: emptyList(),
                         error = "",
-                        isLoading = false
+                        isLoading = false,
+                        isModalErrorVisible = false
                     )
                 }
 
@@ -167,7 +167,8 @@ class HomeViewModel @Inject constructor(
                         pesoActual = resource.data?.pesoActual ?: 0f,
                         pesoIdeal = resource.data?.pesoIdeal ?: 0f,
                         usuarioId = resource.data?.usuarioId ?: "",
-                        isLoading = false
+                        isLoading = false,
+                        isModalErrorVisible = false
                     )
                     updateProgreso()
                 }
@@ -233,7 +234,8 @@ class HomeViewModel @Inject constructor(
 
                         is Resource.Success -> {
                             _uiState.value = _uiState.value.copy(
-                                error = ""
+                                error = "",
+                                isModalErrorVisible = false
                             )
                             createNuevaMeta()
                         }
@@ -266,7 +268,8 @@ class HomeViewModel @Inject constructor(
 
                         is Resource.Success -> {
                             _uiState.value = _uiState.value.copy(
-                                error = ""
+                                error = "",
+                                isModalErrorVisible = false
                             )
                             updateUsuario()
                         }
@@ -296,7 +299,8 @@ class HomeViewModel @Inject constructor(
 
                     is Resource.Success -> {
                         _uiState.value = _uiState.value.copy(
-                            error = ""
+                            error = "",
+                            isModalErrorVisible = false
                         )
                         updateUsuario()
                     }
@@ -324,7 +328,8 @@ class HomeViewModel @Inject constructor(
 
                 is Resource.Success -> {
                     _uiState.value = _uiState.value.copy(
-                        error = ""
+                        error = "",
+                        isModalErrorVisible = false
                     )
                     update()
                 }

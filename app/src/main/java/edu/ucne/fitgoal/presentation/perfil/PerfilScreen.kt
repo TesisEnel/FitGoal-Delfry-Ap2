@@ -130,7 +130,7 @@ fun PerfilScreen(
                                 fontSize = 20.sp
                             )
                             Text(
-                                "Altura: ${uiState.value.altura} m",
+                                "Altura: ${uiState.value.altura} (ft)",
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontSize = 20.sp
                             )

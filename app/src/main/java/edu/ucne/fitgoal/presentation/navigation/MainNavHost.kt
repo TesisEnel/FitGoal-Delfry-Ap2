@@ -17,8 +17,6 @@ import com.google.firebase.auth.FirebaseAuth
 import edu.ucne.fitgoal.MainActivity
 import edu.ucne.fitgoal.presentation.aguadiaria.HorarioScreen
 import edu.ucne.fitgoal.presentation.calendario.CalendarioScreen
-import edu.ucne.fitgoal.presentation.auth.DatosUsuarioScreen
-import edu.ucne.fitgoal.presentation.calculadora.CalculadoraScreen
 import edu.ucne.fitgoal.presentation.editarPerfil.EditarPerfilScreen
 import edu.ucne.fitgoal.presentation.ejercicio.EjercicioScreen
 import edu.ucne.fitgoal.presentation.home.HomeScreen

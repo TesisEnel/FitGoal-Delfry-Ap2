@@ -5,9 +5,7 @@ import edu.ucne.fitgoal.data.remote.dto.EjercicioDto
 import edu.ucne.fitgoal.data.remote.dto.HorarioBebidaDto
 import edu.ucne.fitgoal.data.remote.dto.PerfilDto
 import edu.ucne.fitgoal.data.remote.dto.PlantillaDto
-import edu.ucne.fitgoal.data.remote.dto.PlanificadorDto
 import edu.ucne.fitgoal.data.remote.dto.ProgresoUsuarioDto
-import edu.ucne.fitgoal.data.remote.dto.RelojDto
 import edu.ucne.fitgoal.data.remote.dto.TipDto
 import edu.ucne.fitgoal.data.remote.dto.UsuarioDto
 import edu.ucne.fitgoal.util.Constants.API_KEY
@@ -72,7 +70,8 @@ interface FitGoalApi {
     @Headers("X-API-Key:${API_KEY}")
     @GET("api/GetPlantillas")
     suspend fun getPlantillas(): List<PlantillaDto>
-  
+
+    @Headers("X-API-Key:${API_KEY}")
     @GET("api/ProgresoUsuarios/List/{id}")
     suspend fun getProgresosUsuario(@Path("id") id: String): List<ProgresoUsuarioDto>
 
