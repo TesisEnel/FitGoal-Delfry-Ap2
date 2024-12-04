@@ -85,6 +85,8 @@
 
 </div>
 
+---
+
 <div align="center">
 
 ### Pantallas de Inicio de Sesión y Registro
@@ -93,17 +95,61 @@
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/1.inicio_sesion.png" width="200"><br>
       <b>Pantalla de Inicio de Sesión</b><br>
-      Los usuarios pueden iniciar sesión utilizando su correo electrónico y contraseña, o iniciar sesión con Google.
+      Los usuarios pueden iniciar sesión utilizando su correo electrónico y contraseña.
     </td>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/2.registro_usuario.png" width="200"><br>
       <b>Pantalla de Registro de Usuario</b><br>
       Los usuarios nuevos pueden registrarse proporcionando su nombre, apellidos, correo y contraseña.
     </td>
+  </tr>
+</table>
+
+</div>
+
+---
+
+<div align="center">
+
+### Inicio de Sesión con Google y Formulario Inicial
+<table>
+  <tr>
     <td align="center">
       <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/3.inicio_sesion_google.png" width="200"><br>
       <b>Inicio de Sesión con Google</b><br>
       Inicio rápido y seguro a través de la autenticación con Google.
+    </td>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/0.formulario_inicial.png" width="200"><br>
+      <b>Formulario Inicial</b><br>
+      Registro de información inicial como peso, altura y metas.
+    </td>
+  </tr>
+</table>
+
+</div>
+
+---
+
+<div align="center">
+
+### Home y Gestión de Perfil
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/4.home.png" width="200"><br>
+      <b>Pantalla Home</b><br>
+      Resumen de metas, progreso y consejos útiles.
+    </td>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/10.perfil.png" width="200"><br>
+      <b>Perfil de Usuario</b><br>
+      Información del perfil con opciones para editar o cerrar sesión.
+    </td>
+    <td align="center">
+      <img src="https://github.com/stvnyc/Fotos_FitGoal/blob/main/capturas/11.editar_perfil.png" width="200"><br>
+      <b>Editar Perfil</b><br>
+      Edición de datos como edad y altura.
     </td>
   </tr>
 </table>
