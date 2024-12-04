@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -35,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -159,9 +159,6 @@ fun PerfilScreen(
                     listOf(
                         Triple("Editar Perfil", Icons.Default.Edit) {
                             perfilViewModel.onEvent(PerfilEvent.NavigateToEditarPerfil, navController)
-                        },
-                        Triple("Progreso semanal", Icons.Default.CalendarToday) {
-                            perfilViewModel.onEvent(PerfilEvent.NavigateToProgresoSemanal, navController)
                         }
                     )
                 ) { (text, icon, onClick) ->
@@ -223,7 +220,7 @@ fun PerfilScreen(
 @Composable
 fun ProfileButton(
     text: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     onClick: () -> Unit
 ) {
     Button(
