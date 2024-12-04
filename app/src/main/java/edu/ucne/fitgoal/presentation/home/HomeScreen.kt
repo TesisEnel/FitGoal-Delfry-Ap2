@@ -92,9 +92,6 @@ fun HomeScreen(
             userImageUrl.value = it.photoUrl?.toString() ?: ""
         }
     }
-    LaunchedEffect(Unit) {
-        onEvent(HomeEvent.Update)
-    }
     Box(
         modifier = Modifier
             .fillMaxSize()

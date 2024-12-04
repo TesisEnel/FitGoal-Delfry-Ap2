@@ -127,7 +127,7 @@ fun DatosUsuarioScreen(
                             )
                             TextFielComponent("25",
                                 uiState.edad.toString(),
-                                KeyboardType.Text,
+                                KeyboardType.Number,
                                 ImeAction.Next,
                                 uiState.edadError != "",
                                 uiState.edadError
@@ -143,7 +143,7 @@ fun DatosUsuarioScreen(
                             )
                             TextFielComponent("5.4",
                                 uiState.altura.toString(),
-                                KeyboardType.Text,
+                                KeyboardType.Number,
                                 ImeAction.Next,
                                 uiState.alturaError != "",
                                 uiState.alturaError
@@ -159,7 +159,7 @@ fun DatosUsuarioScreen(
                             )
                             TextFielComponent("100",
                                 uiState.pesoInicial.toString(),
-                                KeyboardType.Text,
+                                KeyboardType.Number,
                                 ImeAction.Next,
                                 uiState.pesoInicialError != "",
                                 uiState.pesoInicialError

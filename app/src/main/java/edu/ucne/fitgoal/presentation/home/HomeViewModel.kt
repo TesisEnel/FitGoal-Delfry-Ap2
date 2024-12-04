@@ -27,6 +27,8 @@ class HomeViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        getProgresoUsuario()
+        getUsuario()
         fetchTips()
     }
 
