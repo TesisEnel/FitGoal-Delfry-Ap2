@@ -9,6 +9,7 @@ data class UsuarioDto(
     val correo: String = "",
     val edad: Int = 0,
     val altura: Float = 0.0f,
+    val pesoInicial: Float = 0.0f,
     val pesoActual: Float = 0.0f,
     val pesoIdeal: Float = 0.0f,
     val aguaDiaria: Float = 0.0f
@@ -22,6 +23,7 @@ fun UsuarioDto.toEntity(): UsuarioEntity {
         correo = this.correo,
         edad = this.edad,
         altura = this.altura,
+        pesoInicial = this.pesoInicial,
         pesoActual = this.pesoActual,
         pesoIdeal = this.pesoIdeal,
         aguaDiaria = this.aguaDiaria

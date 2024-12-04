@@ -5,6 +5,9 @@ import edu.ucne.fitgoal.data.remote.dto.EjercicioDto
 import edu.ucne.fitgoal.data.remote.dto.HorarioBebidaDto
 import edu.ucne.fitgoal.data.remote.dto.PerfilDto
 import edu.ucne.fitgoal.data.remote.dto.PlantillaDto
+import edu.ucne.fitgoal.data.remote.dto.PlanificadorDto
+import edu.ucne.fitgoal.data.remote.dto.ProgresoUsuarioDto
+import edu.ucne.fitgoal.data.remote.dto.RelojDto
 import edu.ucne.fitgoal.data.remote.dto.TipDto
 import edu.ucne.fitgoal.data.remote.dto.UsuarioDto
 import edu.ucne.fitgoal.util.Constants.API_KEY
@@ -28,7 +31,7 @@ interface FitGoalApi {
 
     @Headers("X-API-Key:${API_KEY}")
     @PUT("api/Usuarios/{id}")
-    suspend fun putUsuario(@Path("id") id: String, @Body usuarioDto: UsuarioDto): UsuarioDto
+    suspend fun putUsuario(@Path("id") id: String, @Body usuarioDto: UsuarioDto): Response<Unit>
 
     @Headers("X-API-Key:${API_KEY}")
     @GET("api/Usuarios/{id}")
@@ -69,4 +72,15 @@ interface FitGoalApi {
     @Headers("X-API-Key:${API_KEY}")
     @GET("api/GetPlantillas")
     suspend fun getPlantillas(): List<PlantillaDto>
+  
+    @GET("api/ProgresoUsuarios/List/{id}")
+    suspend fun getProgresosUsuario(@Path("id") id: String): List<ProgresoUsuarioDto>
+
+    @Headers("X-API-Key:${API_KEY}")
+    @POST("api/ProgresoUsuarios")
+    suspend fun postProgresoUsuario(@Body progresoUsuarioDto: ProgresoUsuarioDto): ProgresoUsuarioDto
+
+    @Headers("X-API-Key:${API_KEY}")
+    @DELETE("api/ProgresoUsuarios/User/{id}")
+    suspend fun deleteProgresosUsuarios(@Path("id") id: String): Response<Unit>
 }

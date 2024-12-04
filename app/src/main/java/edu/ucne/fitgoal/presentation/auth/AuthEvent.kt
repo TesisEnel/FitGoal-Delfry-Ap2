@@ -11,7 +11,12 @@ sealed interface AuthEvent {
     data class ResetPassword(val email: String, val goLogin: () -> Unit) : AuthEvent
     data class SignInWithGoogle(val activityContext: Context, val goHome: () -> Unit) : AuthEvent
     data class SignUp(val goLogin: () -> Unit) : AuthEvent
+    data object UpdateUsuario : AuthEvent
     data class Logout(val context: Context, val goLogin: () -> Unit) : AuthEvent
+    data class EdadChanged(val edad: String) : AuthEvent
+    data class AlturaChanged(val altura: String) : AuthEvent
+    data class PesoInicialChanged(val pesoInicial: String) : AuthEvent
+    data class PesoIdealChanged(val pesoIdeal: String) : AuthEvent
     data object SignIn : AuthEvent
     data object StartDestination : AuthEvent
     data object SendEmailVerification : AuthEvent
@@ -19,4 +24,5 @@ sealed interface AuthEvent {
     data object StartEmailVerification : AuthEvent
     data object ChangePasswordVisibility : AuthEvent
     data object CloseErrorModal : AuthEvent
+    data object GetUsuario : AuthEvent
 }

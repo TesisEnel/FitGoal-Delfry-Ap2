@@ -9,6 +9,7 @@ import edu.ucne.fitgoal.data.local.dao.EjerciciosPlantillasDao
 import edu.ucne.fitgoal.data.local.dao.FitGoalDao
 import edu.ucne.fitgoal.data.local.dao.HorarioBebidaDao
 import edu.ucne.fitgoal.data.local.dao.PlantillaDao
+import edu.ucne.fitgoal.data.local.dao.ProgresoUsuarioDao
 import edu.ucne.fitgoal.data.local.dao.TipDao
 import edu.ucne.fitgoal.data.local.dao.UsuarioDao
 import edu.ucne.fitgoal.data.local.entities.CalendarioEntity
@@ -18,6 +19,7 @@ import edu.ucne.fitgoal.data.local.entities.UsuarioEntity
 import edu.ucne.fitgoal.data.local.entities.PlantillaEntity
 import edu.ucne.fitgoal.data.local.entities.EjerciciosPlantillasEntity
 import edu.ucne.fitgoal.data.local.entities.HorarioBebidaEntity
+import edu.ucne.fitgoal.data.local.entities.ProgresoUsuarioEntity
 import edu.ucne.fitgoal.data.local.entities.TipEntity
 
 @Database(
@@ -29,8 +31,9 @@ import edu.ucne.fitgoal.data.local.entities.TipEntity
         EjercicioEntity::class,
         EjerciciosPlantillasEntity::class,
         HorarioBebidaEntity::class,
-        TipEntity::class
-    ],
+        TipEntity::class,
+        ProgresoUsuarioEntity::class
+               ],
     version = 25,
     exportSchema = false
 )
@@ -44,4 +47,5 @@ abstract class FitGoalDb : RoomDatabase(){
     abstract fun ejerciciosPlantillasDao(): EjerciciosPlantillasDao
     abstract fun horarioBebidaDao(): HorarioBebidaDao
     abstract fun tipDao(): TipDao
+    abstract fun progresoUsuarioDao(): ProgresoUsuarioDao
 }
