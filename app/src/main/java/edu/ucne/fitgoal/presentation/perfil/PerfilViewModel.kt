@@ -2,11 +2,13 @@ package edu.ucne.fitgoal.presentation.perfil
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.fitgoal.data.remote.Resource
 import edu.ucne.fitgoal.data.repository.PerfilRepository
+import edu.ucne.fitgoal.presentation.navigation.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -50,7 +52,6 @@ class PerfilViewModel @Inject constructor(
         }
     }
 
-
     private fun getUsuario(userId: String) {
         viewModelScope.launch {
             perfilRepository.getUsuario(userId).collect { resource ->
@@ -92,16 +93,18 @@ class PerfilViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: PerfilEvent) {
+    fun onEvent(event: PerfilEvent, navController: NavController) {
         when (event) {
             is PerfilEvent.GetPerfil -> fetchUserData()
-            is PerfilEvent.NavigateToEditarPerfil -> {}
-            is PerfilEvent.NavigateToCalculadora -> {}
-            is PerfilEvent.NavigateToTips -> {}
-            is PerfilEvent.NavigateToAyuda -> {}
+            is PerfilEvent.NavigateToEditarPerfil -> navigateToEditarPerfil(navController)
+            is PerfilEvent.NavigateToProgresoDiario -> {}
             is PerfilEvent.Logout -> logout()
             is PerfilEvent.CloseErrorModal -> closeErrorModal()
         }
+    }
+
+    private fun navigateToEditarPerfil(navController: NavController) {
+        navController.navigate(Screen.EditarPerfilScreen)
     }
 
     private fun logout() {
