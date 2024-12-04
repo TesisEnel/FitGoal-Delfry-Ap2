@@ -1,13 +1,6 @@
-package edu.ucne.fitgoal.data.local.entities
+package edu.ucne.fitgoal.presentation.editarPerfil
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import kotlinx.serialization.Serializable
-
-@Serializable
-@Entity(tableName = "Usuarios")
-data class UsuarioEntity(
-    @PrimaryKey
+data class EditarPerfilUiState(
     val usuarioId: String = "",
     val nombre: String = "",
     val apellido: String = "",
@@ -17,6 +10,7 @@ data class UsuarioEntity(
     val pesoInicial: Float = 0.0f,
     val pesoActual: Float = 0.0f,
     val pesoIdeal: Float = 0.0f,
-    val aguaDiaria: Float = 0.0f
+    val aguaDiaria: Float = 0.0f,
+    val isLoading: Boolean = false,
+    val error: String = ""
 )
-

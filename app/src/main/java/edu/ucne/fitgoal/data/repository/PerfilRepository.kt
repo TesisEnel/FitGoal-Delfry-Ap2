@@ -4,6 +4,7 @@ import edu.ucne.fitgoal.data.local.dao.UsuarioDao
 import edu.ucne.fitgoal.data.local.entities.UsuarioEntity
 import edu.ucne.fitgoal.data.remote.RemoteDataSource
 import edu.ucne.fitgoal.data.remote.Resource
+import edu.ucne.fitgoal.data.remote.dto.UsuarioDto
 import edu.ucne.fitgoal.data.remote.dto.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -38,5 +39,18 @@ class PerfilRepository @Inject constructor(
             }
         }
     }
-}
 
+    fun updateUsuario(id: String, usuarioDto: UsuarioDto): Flow<Resource<UsuarioEntity>> = flow {
+        try {
+            emit(Resource.Loading())
+            val updatedUsuarioDto = remoteDataSource.putUsuario(id, usuarioDto)
+            val updatedUsuarioEntity = updatedUsuarioDto.toEntity()
+            usuarioDao.save(updatedUsuarioEntity)
+            emit(Resource.Success(updatedUsuarioEntity))
+        } catch (e: HttpException) {
+            emit(Resource.Error("Error al actualizar el usuario: ${e.message}"))
+        } catch (e: Exception) {
+            emit(Resource.Error("Error desconocido: ${e.message}"))
+        }
+    }
+}
