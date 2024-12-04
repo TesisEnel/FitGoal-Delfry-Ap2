@@ -1,3 +1,5 @@
+<div align="center">
+
 # 💪 **FitGoal** 🎯  
 ¡Tu compañero definitivo para alcanzar tus metas de fitness y bienestar! 💪💧✨
 
@@ -5,14 +7,26 @@
   <img src="https://github.com/Elpelfry/FitGoal/blob/master/app/src/main/ic_launcher-playstore.png" width="200" height="200" alt="FitGoal Logo">
 </p>
 
+</div>
+
 ---
 
+<div align="center">
+
 ## ✨ **Descripción**
+
+</div>
+
 **FitGoal** es una aplicación móvil diseñada para ayudarte a mantenerte en forma y saludable. Ofrece herramientas que facilitan el seguimiento de tus objetivos de fitness, el consumo de agua y mucho más. Todo esto mientras aprovecha lo último en tecnología para una experiencia de usuario fluida y moderna.
 
 ---
 
+<div align="center">
+
 ## 🌟 **Características Destacadas**
+
+</div>
+
 - **🏋️ Gestión de Ejercicios:** Planifica y organiza tus rutinas con detalles como repeticiones, series y grupos musculares.
 - **💧 Seguimiento de Hidratación:** Recibe recordatorios y lleva un registro de tu consumo diario de agua.
 - **🔒 Autenticación Segura:** Utiliza Firebase Authentication para inicios de sesión rápidos y seguros.
@@ -23,7 +37,11 @@
 
 ---
 
+<div align="center">
+
 ## 🛠️ **Tecnologías Utilizadas**
+
+</div>
 
 - 🏗️ **Room:** Gestión de datos locales con base de datos SQLite.
 - 🛡️ **Hilt:** Inyección de dependencias para simplificar el desarrollo.
@@ -32,10 +50,16 @@
 - 🔥 **Firebase Authentication:** Autenticación de usuarios segura y confiable.
 - 🕰️ **WorkManager:** Programación de tareas en segundo plano.
 - 📅 **Calendarios Personalizados:** Seguimiento y planificación de objetivos.
+- 📊 **Firebase Analytics:** Para entender cómo los usuarios interactúan con la aplicación.
 
 ---
 
+<div align="center">
+
 ## 📂 **Estructura del Proyecto**
+
+</div>
+
 ```plaintext
 ├── app
 │   ├── src
@@ -55,7 +79,13 @@
 
 ---
 
+<div align="center">
+
 ## 📸 **Capturas de Pantalla**
+
+</div>
+
+<div align="center">
 
 ### Pantallas de Inicio de Sesión y Registro
 <table>
@@ -78,7 +108,11 @@
   </tr>
 </table>
 
+</div>
+
 ---
+
+<div align="center">
 
 ### Gestión de Ejercicios
 <table>
@@ -96,7 +130,11 @@
   </tr>
 </table>
 
+</div>
+
 ---
+
+<div align="center">
 
 ### Gestión de Hidratación
 <table>
@@ -118,3 +156,19 @@
     </td>
   </tr>
 </table>
+
+</div>
+
+<div align="center">
+
+## ❤️ **Desarrollado con Amor por:**
+
+<p align="center" style="font-size: 1.5em;">
+  <b>Delfry Paulino</b> 💻 <br>
+  <b>Yudelka Guillen</b> 🎨 <br>
+  <b>Steven Candelario</b> 🔧 <br>
+</p> 
+
+✨ ¡Gracias por hacer posible este proyecto! ✨
+
+</div>
