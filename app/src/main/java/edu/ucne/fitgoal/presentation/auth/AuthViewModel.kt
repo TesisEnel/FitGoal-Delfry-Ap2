@@ -12,7 +12,9 @@ import androidx.work.workDataOf
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import edu.ucne.fitgoal.data.remote.Resource
+import edu.ucne.fitgoal.data.remote.dto.ProgresoUsuarioDto
 import edu.ucne.fitgoal.data.repository.AuthRepository
+import edu.ucne.fitgoal.data.repository.ProgresoUsuarioRepository
 import edu.ucne.fitgoal.presentation.navigation.Screen
 import edu.ucne.fitgoal.util.CountdownWorker
 import kotlinx.coroutines.delay
@@ -21,12 +23,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val progresoUsuarioRepository: ProgresoUsuarioRepository
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
@@ -37,6 +41,9 @@ class AuthViewModel @Inject constructor(
 
     init {
         _emailVerified.value = false
+        if (authRepository.isUserSignedIn()) {
+            getUsuario()
+        }
         checkTimer()
     }
 
@@ -58,12 +65,31 @@ class AuthViewModel @Inject constructor(
             AuthEvent.StartDestination -> startDestination()
             AuthEvent.ChangePasswordVisibility -> changePasswordVisibility()
             AuthEvent.CloseErrorModal -> closeErrorModal()
+            AuthEvent.GetUsuario -> getUsuario()
+            AuthEvent.UpdateUsuario -> updateUsuario()
+            is AuthEvent.AlturaChanged -> alturaChanged(event.altura)
+            is AuthEvent.EdadChanged -> edadChanged(event.edad)
+            is AuthEvent.PesoIdealChanged -> onPesoIdealChange(event.pesoIdeal)
+            is AuthEvent.PesoInicialChanged -> onPesoInicialChange(event.pesoInicial)
         }
     }
 
     private fun closeErrorModal() {
         _uiState.value = _uiState.value.copy(isModalErrorVisible = false)
         _uiState.value = _uiState.value.copy(error = "")
+    }
+
+    fun homeDestination() : Boolean{
+        if (_uiState.value.edad > 0) {
+            _uiState.value = _uiState.value.copy(isDatosLLenos = true)
+            return true
+        } else {
+            _uiState.value = _uiState.value.copy(
+                isDatosLLenos = false,
+                esNuevo = true
+            )
+            return false
+        }
     }
 
     fun startDestination(): Screen {
@@ -76,16 +102,15 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun signInWithGoogle(activityContext: Context, goHome: () -> Unit) =
+    private fun signInWithGoogle(activityContext: Context, goHome: () -> Unit = {}) =
         viewModelScope.launch {
             authRepository.signInWithGoogle(activityContext).collectLatest { resource ->
                 when (resource) {
                     is Resource.Success -> {
                         _uiState.value = _uiState.value.copy(
-                            error = "",
-                            isLoading = false
+                            error = ""
                         )
-                        goHome()
+                        getUsuario(goHome)
                     }
 
                     is Resource.Error -> {
@@ -272,9 +297,9 @@ class AuthViewModel @Inject constructor(
                             _uiState.value =
                                 _uiState.value.copy(isEmailVerified = authRepository.isEmailVerified())
                             _uiState.value = _uiState.value.copy(
-                                error = "",
-                                isLoading = false
+                                error = ""
                             )
+                            getUsuario()
                         }
 
                         is Resource.Error -> {
@@ -294,6 +319,121 @@ class AuthViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    private fun getUsuario(goHome: () -> Unit={}) = viewModelScope.launch {
+        authRepository.getUsarioFlow(authRepository.getCurrentUid()!!).collectLatest { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    _uiState.value = _uiState.value.copy(
+                        nombre = resource.data?.nombre ?: "",
+                        apellido = resource.data?.apellido ?: "",
+                        email = resource.data?.correo ?: "",
+                        edad = resource.data?.edad ?: 0,
+                        altura = resource.data?.altura ?: 0f,
+                        pesoInicial = resource.data?.pesoInicial ?: 0f,
+                        pesoActual = resource.data?.pesoActual ?: 0f,
+                        pesoIdeal = resource.data?.pesoIdeal ?: 0f,
+                        update = true,
+                        isLoading = false
+                    )
+                    if (resource.data != null) {
+                        val edad = resource.data.edad
+                        if (edad > 0) {
+                            _uiState.value = _uiState.value.copy(isDatosLLenos = true)
+                        } else {
+                            _uiState.value = _uiState.value.copy(
+                                isDatosLLenos = false,
+                                esNuevo = true
+                            )
+                        }
+                    }
+                    homeDestination()
+                    goHome()
+                }
+
+                is Resource.Error -> {
+                    _uiState.value = _uiState.value.copy(
+                        error = resource.message ?: "",
+                        isLoading = false
+                    )
+                }
+
+                is Resource.Loading -> {
+                    _uiState.value = _uiState.value.copy(
+                        error = "",
+                        isLoading = true
+                    )
+                }
+            }
+        }
+    }
+
+    private fun updateUsuario() = viewModelScope.launch {
+        if (validateForm()) {
+            var usuario = _uiState.value.toUsuarioDto()
+            usuario = usuario.copy(usuarioId = authRepository.getCurrentUid()!!)
+            authRepository.updateUsuario(usuario).collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        _uiState.value = _uiState.value.copy(
+                            isLoading = true,
+                            error = ""
+                        )
+                    }
+
+                    is Resource.Success -> {
+                        _uiState.value = _uiState.value.copy(
+                            error = ""
+                        )
+                        createNuevaMeta()
+                    }
+
+                    is Resource.Error -> {
+                        _uiState.value = _uiState.value.copy(
+                            isLoading = false,
+                            error = resource.message ?: "",
+                            isModalErrorVisible = true
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun createNuevaMeta() {
+        val progresoUsuario = ProgresoUsuarioDto(
+            usuarioId = authRepository.getCurrentUid()!!,
+            fecha = LocalDate.now().toString(),
+            peso = _uiState.value.pesoInicial
+        )
+        progresoUsuarioRepository
+            .createProgresoUsuario(progresoUsuario).collect { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        _uiState.value = _uiState.value.copy(
+                            isLoading = true,
+                            error = ""
+                        )
+                    }
+
+                    is Resource.Success -> {
+                        _uiState.value = _uiState.value.copy(
+                            error = "",
+                            isLoading = false,
+                            isDatosLLenos = true
+                        )
+                    }
+
+                    is Resource.Error -> {
+                        _uiState.value = _uiState.value.copy(
+                            isLoading = false,
+                            error = resource.message ?: "",
+                            isModalErrorVisible = true
+                        )
+                    }
+                }
+            }
     }
 
     private fun resetPassword(email: String, goLogin: () -> Unit) = viewModelScope.launch {
@@ -355,6 +495,61 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    private fun edadChanged(edadStr: String) {
+        val edad = edadStr.toIntOrNull() ?: 0
+        _uiState.value = _uiState.value.copy(
+            edad = edad,
+            edadError = ""
+        )
+        if (edad < 5) {
+            _uiState.value = _uiState.value.copy(
+                edadError = "La edad debe ser mayor a 5 años"
+            )
+        }
+    }
+
+    private fun alturaChanged(alturaStr: String) {
+        val altura = alturaStr.toFloatOrNull() ?: 0f
+        _uiState.value = _uiState.value.copy(
+            altura = altura,
+            alturaError = ""
+        )
+        if (altura !in 4f..8f) {
+            _uiState.value =
+                _uiState.value.copy(alturaError = "La altura debe ser entre 4 y 8 pies (ft)")
+        }
+    }
+
+    private fun onPesoIdealChange(pesoStr: String) {
+        val pesoIdeal = pesoStr.toFloatOrNull() ?: 0f
+        _uiState.value =
+            _uiState.value.copy(pesoIdeal = pesoIdeal, pesoIdealError = "", pesoInicialError = "")
+        if (pesoIdeal == _uiState.value.pesoInicial) {
+            _uiState.value =
+                _uiState.value.copy(pesoIdealError = "El peso ideal debe ser diferente al peso actual")
+        } else if (pesoIdeal !in 60.0..1500.0) {
+            _uiState.value =
+                _uiState.value.copy(pesoIdealError = "El peso ideal debe ser entre 60 y 1500")
+        }
+    }
+
+    private fun onPesoInicialChange(pesoStr: String) {
+        val pesoInicial = pesoStr.toFloatOrNull() ?: 0f
+        _uiState.value = _uiState.value.copy(
+            pesoInicial = pesoInicial,
+            pesoActual = pesoInicial,
+            pesoInicialError = "",
+            pesoIdealError = ""
+        )
+        if (pesoInicial == _uiState.value.pesoIdeal) {
+            _uiState.value =
+                _uiState.value.copy(pesoInicialError = "El peso inicial debe ser diferente al peso ideal")
+        } else if (pesoInicial !in 60.0..1500.0) {
+            _uiState.value =
+                _uiState.value.copy(pesoInicialError = "El peso inicial debe ser entre 60 y 1500")
+        }
+    }
+
     private fun emailchanged(email: String) {
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9]+\\.[A-Za-z]+$".toRegex()
         _uiState.update {
@@ -407,5 +602,66 @@ class AuthViewModel @Inject constructor(
         } else {
             _uiState.value = _uiState.value.copy(keyboardType = KeyboardType.Password)
         }
+    }
+
+    private fun validateForm(): Boolean {
+        var isValid = true
+
+        val nombreRegex = "^[A-Za-z]+\$".toRegex()
+        if (!nombreRegex.matches(_uiState.value.nombre)) {
+            _uiState.value = _uiState.value.copy(nombreError = "Introduce un nombre válido")
+            isValid = false
+        } else {
+            _uiState.value = _uiState.value.copy(nombreError = "")
+        }
+
+        val apellidoRegex = "^[A-Za-z ]+\$".toRegex()
+        if (!apellidoRegex.matches(_uiState.value.apellido)) {
+            _uiState.value = _uiState.value.copy(apellidoError = "Introduce un apellido válido")
+            isValid = false
+        } else {
+            _uiState.value = _uiState.value.copy(apellidoError = "")
+        }
+
+        if (_uiState.value.edad < 5) {
+            _uiState.value = _uiState.value.copy(edadError = "La edad debe ser mayor a 5 años")
+            isValid = false
+        } else {
+            _uiState.value = _uiState.value.copy(edadError = "")
+        }
+
+        if (_uiState.value.altura !in 4f..8f) {
+            _uiState.value =
+                _uiState.value.copy(alturaError = "La altura debe ser entre 4 y 8 pies (ft)")
+            isValid = false
+        } else {
+            _uiState.value = _uiState.value.copy(alturaError = "")
+        }
+
+        if (_uiState.value.pesoInicial !in 60.0..1500.0) {
+            _uiState.value =
+                _uiState.value.copy(pesoInicialError = "El peso inicial debe ser entre 60 y 1500")
+            isValid = false
+        } else if (_uiState.value.pesoInicial == _uiState.value.pesoIdeal) {
+            _uiState.value =
+                _uiState.value.copy(pesoInicialError = "El peso inicial debe ser diferente al peso ideal")
+            isValid = false
+        } else {
+            _uiState.value = _uiState.value.copy(pesoInicialError = "")
+        }
+
+        if (_uiState.value.pesoIdeal !in 60.0..1500.0) {
+            _uiState.value =
+                _uiState.value.copy(pesoIdealError = "El peso ideal debe ser entre 60 y 1500")
+            isValid = false
+        } else if (_uiState.value.pesoIdeal == _uiState.value.pesoInicial) {
+            _uiState.value =
+                _uiState.value.copy(pesoIdealError = "El peso ideal debe ser diferente al peso inicial")
+            isValid = false
+        } else {
+            _uiState.value = _uiState.value.copy(pesoIdealError = "")
+        }
+
+        return isValid
     }
 }

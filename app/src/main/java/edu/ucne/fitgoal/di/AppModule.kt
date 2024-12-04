@@ -34,6 +34,7 @@ object AppModule {
     @Provides
     fun provideTipDao(fitGoalDb: FitGoalDb) = fitGoalDb.tipDao()
     @Provides
+    fun provideProgresoUsuarioDao(fitGoalDb: FitGoalDb) = fitGoalDb.progresoUsuarioDao()
     @Singleton
     fun provideApplicationContext(@ApplicationContext context: Context): Context = context
 }

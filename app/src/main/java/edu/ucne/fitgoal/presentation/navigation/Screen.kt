@@ -43,5 +43,10 @@ sealed class Screen {
     data object EjerciciosScreen: Screen()
 
     @Serializable
+    data object ProgresoListScreen: Screen()
+
+    @Serializable
+    data object Home: Screen()
+    @Serializable
     data object EditarPerfilScreen: Screen()
 }
