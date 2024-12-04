@@ -16,6 +16,8 @@ import androidx.navigation.NavHostController
 import edu.ucne.fitgoal.R
 import edu.ucne.fitgoal.ui.theme.DarkGreen
 import edu.ucne.fitgoal.ui.theme.LightGreen
+import edu.ucne.fitgoal.presentation.navigation.BottomNavItem
+
 
 @Composable
 fun NavBottomBar(
@@ -34,13 +36,7 @@ fun NavBottomBar(
             .clip(RoundedCornerShape(12.dp)),
         backgroundColor = DarkGreen,
     ) {
-        BottomNavItem(
-            title = stringResource(R.string.drawer_calendario),
-            isSelected = selectedItem.value == stringResource(R.string.drawer_calendario),
-            id = R.drawable.calendar
-        ) {
-            handleItemClick(Screen.CalendarioScreen, it)
-        }
+
         BottomNavItem(
             title = stringResource(R.string.drawer_aguadiaria),
             isSelected = selectedItem.value == stringResource(R.string.drawer_aguadiaria),
@@ -49,12 +45,20 @@ fun NavBottomBar(
             handleItemClick(Screen.AguaDiariaScreen, it)
         }
         BottomNavItem(
+            title = stringResource(R.string.drawer_plantilla),
+            isSelected = selectedItem.value == stringResource(R.string.drawer_plantilla),
+            id = R.drawable.list,
+        ) {
+            handleItemClick(Screen.PlantillaScreen, it)
+        }
+        BottomNavItem(
             title = stringResource(R.string.drawer_home),
             isSelected = selectedItem.value == stringResource(R.string.drawer_home),
             id = R.drawable.home
         ) {
             handleItemClick(Screen.HomeScreen, it)
         }
+
         BottomNavItem(
             title = stringResource(R.string.drawer_ejercicios),
             isSelected = selectedItem.value == stringResource(R.string.drawer_ejercicios),
@@ -63,11 +67,11 @@ fun NavBottomBar(
             handleItemClick(Screen.EjerciciosScreen, it)
         }
         BottomNavItem(
-            title = stringResource(R.string.drawer_calculadora),
-            isSelected = selectedItem.value == stringResource(R.string.drawer_calculadora),
+            title = stringResource(R.string.drawer_calendario),
+            isSelected = selectedItem.value == stringResource(R.string.drawer_calendario),
             id = R.drawable.list,
         ) {
-            handleItemClick(Screen.CalculadoraScreen, it)
+            handleItemClick(Screen.CalendarioScreen, it)
         }
     }
 }
