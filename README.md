@@ -161,7 +161,7 @@
 
 <div align="center">
 
-## ❤️ **Desarrollado con Amor por:**
+## ⚙️ **Desarrollado con Amor por:**
 
 <p align="center" style="font-size: 1.5em;">
   <b>Delfry Paulino</b> 💻 <br>
@@ -169,6 +169,7 @@
   <b>Steven Candelario</b> 🔧 <br>
 </p> 
 
-✨ ¡Gracias por hacer posible este proyecto! ✨
+<p>✨ ¡Gracias a nuestro querido profesor Enel Almonte y a todos nuestros compañeros por todas las experiencias compartidas! ✨</p>
+<p>❤️ ¡Los llevaremos con nosotros siempre! ❤️</p>
 
 </div>
