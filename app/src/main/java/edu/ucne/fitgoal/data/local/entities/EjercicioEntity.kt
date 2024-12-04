@@ -10,6 +10,10 @@ data class EjercicioEntity(
     val nombreEjercicio: String? = null,
     val descripcion: String? = null,
     val foto: String? = null,
-    val grupoMuscular: String? = null
+    val grupoMuscular: String? = null,
+    val repeticiones: Int? = null,
+    val series: Int? = null,
+    val duracionEjercicio: String? = null,
+    val plantillaId: Int? = null,
 )
 

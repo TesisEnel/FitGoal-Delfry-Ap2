@@ -7,7 +7,9 @@ data class EjercicioDto(
     val nombreEjercicio: String = "",
     val descripcion: String = "",
     val foto: String = "",
-    val grupoMuscular: String = ""
+    val grupoMuscular: String = "",
+    val repeticiones: Int = 0,
+    val series: Int = 0
 )
 
 fun EjercicioDto.toEntity(): EjercicioEntity {
@@ -16,6 +18,8 @@ fun EjercicioDto.toEntity(): EjercicioEntity {
         nombreEjercicio = this.nombreEjercicio,
         descripcion = this.descripcion,
         foto = this.foto,
-        grupoMuscular = this.grupoMuscular
+        grupoMuscular = this.grupoMuscular,
+        repeticiones = this.repeticiones,
+        series = this.series
     )
 }

@@ -21,32 +21,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberImagePainter
+import coil3.compose.rememberAsyncImagePainter
 import edu.ucne.fitgoal.data.remote.Resource
 import edu.ucne.fitgoal.data.remote.dto.EjerciciosDto
-import edu.ucne.fitgoal.presentation.Ejercicios.EjercicioViewModel
+import edu.ucne.fitgoal.presentation.ejercicio.EjercicioViewModel
 
 @Composable
 fun CrearRutinaScreen(
     viewModel: EjercicioViewModel = hiltViewModel(),
     plantillaViewModel: PlantillaViewModel = hiltViewModel(),
-    goToPlanificador: () -> Unit,
     goToPerfil: () -> Unit,
     goToReloj: () -> Unit,
-    goToCalculadora: () -> Unit
+    goToCalculadora: () -> Unit,
+    goToPlantilla: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+
+    val estado by viewModel.estado.collectAsState()
     val selectedEjercicios = viewModel.selectedEjercicios
 
     LaunchedEffect(Unit) {
-        viewModel.obtenerEjercicios()
+        viewModel.getEjercicios()
     }
 
     CrearRutinaContent(
-        uiState = uiState,
+        estado = estado,
         selectedEjercicios = selectedEjercicios,
-        onBuscar = viewModel::buscarEjercicios,
-        onFiltrar = viewModel::filtrarPorParteCuerpo,
         onToggleEjercicioSeleccionado = viewModel::toggleEjercicioSeleccionado,
         onSetRepeticionesYSeries = viewModel::setRepeticionesYSeries,
         onSaveRutina = { nombre, descripcion, tiempo ->
@@ -54,12 +53,14 @@ fun CrearRutinaScreen(
             plantillaViewModel.crearPlantilla(
                 nombre = nombre,
                 descripcion = descripcion,
-                ejercicios = selectedEjercicios.map { it.toEntity() },
+                ejercicios = selectedEjercicios.map{it.toEntity()},
                 duracionTotal = timeInSeconds.toString()
             )
-            goToPlanificador()
+            goToPlantilla()
         },
-        onSaveRepsAndSeries = viewModel::saveRepsAndSeries
+        onSaveRepsAndSeries = viewModel::saveRepsAndSeries,
+        onBuscar = viewModel::buscarEjercicios,
+        onFiltrar = viewModel::filtrarEjercicios
     )
 }
 fun convertTimeToSeconds(time: String): Int {
@@ -73,7 +74,7 @@ fun convertTimeToSeconds(time: String): Int {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CrearRutinaContent(
-    uiState: Resource<List<EjerciciosDto>>,
+    estado: Resource<List<EjerciciosDto>>,
     selectedEjercicios: List<EjerciciosDto>,
     onBuscar: (String) -> Unit,
     onFiltrar: (String) -> Unit,
@@ -141,11 +142,11 @@ fun CrearRutinaContent(
                 }
             }
 
-            when (uiState) {
+            when (estado) {
                 is Resource.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
                 is Resource.Success -> {
                     LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
-                        items(uiState.data.orEmpty()) { ejercicio ->
+                        items(estado.data.orEmpty()) { ejercicio ->
                             ItemEjercicio(
                                 ejercicio = ejercicio,
                                 onToggleSeleccionado = onToggleEjercicioSeleccionado,
@@ -156,17 +157,17 @@ fun CrearRutinaContent(
                         }
                     }
                 }
+
                 is Resource.Error -> {
                     Text(
-                        text = "Error: ${uiState.message.orEmpty()}",
+                        text = "Error: ${estado.message.orEmpty()}",
                         color = Color.Red,
                         modifier = Modifier.padding(16.dp)
                     )
                 }
             }
         }
-
-        if (showDialog) {
+            if (showDialog) {
             AlertDialog(
                 onDismissRequest = { showDialog = false },
                 confirmButton = {
@@ -256,7 +257,7 @@ fun ItemEjercicio(
                 }
         ) {
             Image(
-                painter = rememberImagePainter(data = ejercicio.foto),
+               painter = rememberAsyncImagePainter(ejercicio.foto),
                 contentDescription = null,
                 modifier = Modifier
                     .size(64.dp)
