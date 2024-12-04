@@ -192,6 +192,36 @@ class AuthRepository @Inject constructor(
         }
     }
 
+    fun getUsarioFlow(id: String): Flow<Resource<UsuarioEntity>> = flow {
+        try {
+            emit(Resource.Loading())
+            val usuario = remoteDataSource.getUsuario(id)
+            usuarioDao.save(usuario.toEntity())
+            emit(Resource.Success(usuarioDao.find(id)!!))
+        } catch (e: HttpException) {
+            val errorMessage = e.response()?.errorBody()?.string() ?: e.message()
+            emit(Resource.Error("Error de conexion $errorMessage"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error(e.message.toString()))
+        }
+    }
+
+    fun updateUsuario(usuarioDto: UsuarioDto): Flow<Resource<UsuarioEntity>> = flow {
+        try {
+            emit(Resource.Loading())
+            remoteDataSource.putUsuario(usuarioDto.usuarioId!!, usuarioDto)
+            usuarioDao.save(usuarioDto.toEntity())
+            emit(Resource.Success(usuarioDto.toEntity()))
+        } catch (e: HttpException) {
+            val errorMessage = e.response()?.errorBody()?.string() ?: e.message()
+            emit(Resource.Error("Error de conexion $errorMessage"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(Resource.Error(e.message.toString()))
+        }
+    }
+
     fun isEmailVerified(): Boolean = firebaseAuth.currentUser?.isEmailVerified ?: false
 
     fun isUserSignedIn() = firebaseAuth.currentUser != null
